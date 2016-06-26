@@ -39,11 +39,11 @@ OBJECTFILES= \
 
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=-I/usr/include/SDL2
 
 # CC Compiler Flags
-CCFLAGS=-lGL
-CXXFLAGS=-lGL
+CCFLAGS=-I/usr/include/SDL2 -lSDL2 -lGLEW -lGL
+CXXFLAGS=-I/usr/include/SDL2 -lSDL2 -lGLEW -lGL
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-lSDL2 -lGLEW -lGL
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

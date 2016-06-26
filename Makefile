@@ -48,6 +48,8 @@
 MKDIR=mkdir
 CP=cp
 CCADMIN=CCadmin
+CPPFLAGS=-I/usr/include/SDL2
+LDLIBS=-lSDL2 -lGLEW -lGL
 
 
 # build

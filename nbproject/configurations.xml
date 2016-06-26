@@ -35,9 +35,17 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <commandLine>-I/usr/include/SDL2</commandLine>
+        </cTool>
         <ccTool>
-          <commandLine>-lGL</commandLine>
+          <commandLine>-I/usr/include/SDL2 -lSDL2 -lGLEW -lGL</commandLine>
         </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+            <linkerOptionItem>-lSDL2 -lGLEW -lGL</linkerOptionItem>
+          </linkerLibItems>
+        </linkerTool>
       </compileType>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
