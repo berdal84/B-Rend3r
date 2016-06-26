@@ -1,4 +1,4 @@
-# turlt3D
+# turtl3D
 A turtle 3D application using OpenGL.
 
 TODO : First, I need to understand how to draw my first triangle !
