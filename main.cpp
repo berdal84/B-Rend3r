@@ -72,6 +72,7 @@ bool init_resources() {
             cerr << "Could not bind attribute " << attribute_name << endl;
             return false;
     }
+    
 
     return true;
 }
