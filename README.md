@@ -5,7 +5,7 @@ My first goal is to make a very simple 3d implementation of turtle. First I want
 
 turtle.forward(100)
 turtle.rotate(rx, ry, rz)
-turtle.rotateAroud(vx, vy, vz, nAngle)
+turtle.rotateAround(vx, vy, vz, nAngle)
 turtle.up()
 turtle.down()
 
