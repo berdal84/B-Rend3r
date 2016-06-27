@@ -8,10 +8,14 @@ using namespace std;
 /* Using SDL2 for the base window and OpenGL context init */
 #include <SDL2/SDL.h>
 
+/* My headers */
+#include "Shape.h"
+
 /* ADD GLOBAL VARIABLES HERE LATER */
 GLuint program;             // GLSL program
 GLint attribute_coord2d;
-
+Shape myShape; 
+    
 bool init_resources() {
     GLint compile_ok = GL_FALSE, link_ok = GL_FALSE;
 
@@ -75,30 +79,41 @@ bool init_resources() {
 
 void render(SDL_Window* window) {
     /* Clear the background as white */
-    glClearColor(0.1, 0.1,0.1, 1.0);
+    glClearColor(0.5, 0.5,0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glUseProgram(program);
     glEnableVertexAttribArray(attribute_coord2d);
-    GLfloat triangle_vertices[] = {
-        0.0,  0.8,
-       -0.8, -0.8,
-        0.8, -0.8,
-    };
+ 
+     
     /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
     glVertexAttribPointer(
-        attribute_coord2d, // attribute
-        2,                 // number of elements per vertex, here (x,y)
-        GL_FLOAT,          // the type of each element
-        GL_FALSE,          // take our values as-is
-        0,                 // no extra data between each position
-        triangle_vertices  // pointer to the C array
-                                          );
+        attribute_coord2d,      // attribute
+        2,                      // number of elements per vertex, here (x,y)
+        GL_FLOAT,               // the type of each element
+        GL_FALSE,               // take our values as-is
+        0,                      // no extra data between each position
+        myShape.getVertices()        // pointer to the C array
+    );
+   
+    
+
 
     /* Push each element in buffer_vertices to the vertex shader */
     glDrawArrays(GL_TRIANGLES, 0, 3);
     
     glDisableVertexAttribArray(attribute_coord2d);
+    
+    
+    /* A little test to draw lines :
+     * glBegin(GL_LINES);
+        glVertex3f(0.0, 0.0, 0.0);
+        glVertex3f(1.0, 1.0, -1.0);
+        glVertex3f(0.0, 1.0, -1.0);
+        glVertex3f(0.0, 1.0, -1.0);
+    glEnd();*/
+
+    
 
     /* Display the result */
     SDL_GL_SwapWindow(window);
