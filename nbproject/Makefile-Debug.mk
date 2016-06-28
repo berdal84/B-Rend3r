@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/Renderer.o \
 	${OBJECTDIR}/Shape.o \
 	${OBJECTDIR}/main.o
 
@@ -62,6 +63,11 @@ LDLIBSOPTIONS=-lSDL2 -lGLEW -lGL
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/turtl3d: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/turtl3d ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/Renderer.o: Renderer.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Renderer.o Renderer.cpp
 
 ${OBJECTDIR}/Shape.o: Shape.cpp 
 	${MKDIR} -p ${OBJECTDIR}
