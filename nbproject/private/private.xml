@@ -9,7 +9,9 @@
         <group>
             <file>file:/home/dallecortb/turtl3D/main.cpp</file>
             <file>file:/home/dallecortb/turtl3D/Shape.h</file>
+            <file>file:/home/dallecortb/turtl3D/Renderer.cpp</file>
             <file>file:/home/dallecortb/turtl3D/Shape.cpp</file>
+            <file>file:/home/dallecortb/turtl3D/Renderer.h</file>
         </group>
     </open-files>
 </project-private>

@@ -17,38 +17,57 @@ using namespace std;
 
 Shape::Shape() {
     
-    vertices[0] = 0.0;
-    vertices[1] = 0.8;
+    numberOfElementsPerVertex = 2;
+    numberOfElements = 0;
+ 
+    /* reserve memory for six  2D vertices */
+    vertices = new GLfloat[6 * numberOfElementsPerVertex];
+            
+    /* First triangle */
+    pushVertex(0.0, 0.0);
+    pushVertex(0.8, 0.0);
+    pushVertex(0.8, 0.8);
     
-    vertices[2] = 0.8;
-    vertices[3] = 0.8;
-    
-    vertices[4] = 0.8;
-    vertices[5] = 0.0;
-    
-    vertices[6] = 0.0;
-    vertices[7] = 0.0;
-    
-    this->printVerticesCount();
+    /* second triangle */
+    pushVertex(0.8, 0.8);
+    pushVertex(0.0, 0.8);
+    pushVertex(0.0, 0.0);    
+
+    printVerticesCount();
  
 }
 
 Shape::Shape(const Shape& orig) {
+    cout << "blu!!!";
 }
 
 GLfloat* Shape::getVertices(){
     return vertices;
 }
 
+void Shape::pushVertex(GLfloat x, GLfloat y){
+    vertices[numberOfElements++] = x;
+    vertices[numberOfElements++] = y;
+}
+
+int Shape::getNumberOfElementsPerVertex(){
+    return this->numberOfElementsPerVertex;
+}
+
+int Shape::getVerticesBufferSize(){
+    return sizeof(vertices)/sizeof(GLfloat);
+}
+
 int Shape::getVerticesCount(){
-    return sizeof(&vertices);
+    return numberOfElements/numberOfElementsPerVertex;
 }
 
 void Shape::printVerticesCount(){
-    cout << "This shape has " << getVerticesCount() << ".";
+    cout << "This shape has " << getVerticesCount() << " vertices." << endl;
 }
 
 // note : for cleaning memory...
 Shape::~Shape() {
+ 
 }
 

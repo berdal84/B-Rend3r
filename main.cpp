@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 
 	/* If the program exits in the usual way,
 	   free resources and exit with a success */
-	renderer.initResources();
+	renderer.freeResources();
         
 	return EXIT_SUCCESS;
 }

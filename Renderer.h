@@ -36,7 +36,7 @@ public:
     void freeResources();
     void mainLoop(SDL_Window*); 
     void render(SDL_Window*);
-    
+    void drawShape(Shape* shape);
 private:
     GLuint program;
     GLint attribute_coord2d;

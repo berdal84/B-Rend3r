@@ -16,6 +16,8 @@
 using namespace std;
 
 bool Renderer::initResources() {
+
+    
     GLint compile_ok = GL_FALSE, link_ok = GL_FALSE;
 
     // TODO : externalize source
@@ -76,12 +78,8 @@ bool Renderer::initResources() {
     return true;
 }
 
-
-void Renderer::render(SDL_Window* window) {
-    /* Clear the background as white */
-    glClearColor(0.5, 0.5,0.5, 1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
-
+void Renderer::drawShape(Shape* shape){
+    
     glUseProgram(program);
     glEnableVertexAttribArray(attribute_coord2d);
  
@@ -89,18 +87,19 @@ void Renderer::render(SDL_Window* window) {
     /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
     glVertexAttribPointer(
         attribute_coord2d,      // attribute
-        2,                      // number of elements per vertex, here (x,y)
+        shape->getNumberOfElementsPerVertex(),                      // number of elements per vertex, here (x,y)
         GL_FLOAT,               // the type of each element
         GL_FALSE,               // take our values as-is
         0,                      // no extra data between each position
-        myShape.getVertices()        // pointer to the C array
+        shape->getVertices()        // pointer to the C array
     );
    
     
 
-
+    
+    
     /* Push each element in buffer_vertices to the vertex shader */
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount() * shape->getNumberOfElementsPerVertex());
     
     glDisableVertexAttribArray(attribute_coord2d);
     
@@ -112,8 +111,15 @@ void Renderer::render(SDL_Window* window) {
         glVertex3f(0.0, 1.0, -1.0);
         glVertex3f(0.0, 1.0, -1.0);
     glEnd();*/
+}
 
-    
+void Renderer::render(SDL_Window* window) {
+    /* Clear the background as white */
+
+    glClearColor(0.5, 0.5,0.5, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    drawShape(&myShape);
 
     /* Display the result */
     SDL_GL_SwapWindow(window);
