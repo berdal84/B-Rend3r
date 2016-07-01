@@ -17,20 +17,12 @@ using namespace std;
 
 bool Renderer::initResources() {
 
-    // Create a new default shader and get the program
+    // Create a default shape with a default shader and compile it.
+    myShape = new Shape();    
+    myShape->setShader(new Shader() );    
+    if (!myShape->getShader()->compile())
+        return false;
     
-    Shader myShader;
-    myShape = new Shape(&myShader);    
-    myShape->getShader()->compile();
-    
-    const char* attribute_name = "coord2d";
-    attribute_coord2d = glGetAttribLocation(myShape->getShader()->getProgram(), attribute_name);
-    if (attribute_coord2d == -1) {
-            cerr << "Could not bind attribute " << attribute_name << endl;
-            return false;
-    }
-    
-
     return true;
 }
 
@@ -40,12 +32,12 @@ void Renderer::drawShape(Shape* shape){
     
     glUseProgram(shader->getProgram());
    
-    glEnableVertexAttribArray(attribute_coord2d );
+    glEnableVertexAttribArray(shader->getAttributeCoord3D() );
  
      
     /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
     glVertexAttribPointer(
-        attribute_coord2d,      // attribute
+        shader->getAttributeCoord3D(),      // attribute
         shape->getNumberOfElementsPerVertex(),                      // number of elements per vertex, here (x,y)
         GL_FLOAT,               // the type of each element
         GL_FALSE,               // take our values as-is
@@ -60,7 +52,7 @@ void Renderer::drawShape(Shape* shape){
     /* Push each element in buffer_vertices to the vertex shader */
     glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount() * shape->getNumberOfElementsPerVertex());
     
-    glDisableVertexAttribArray(attribute_coord2d);
+    glDisableVertexAttribArray(shader->getAttributeCoord3D());
     
 
 }
@@ -88,12 +80,12 @@ void Renderer::mainLoop(SDL_Window* window) {
 			if (ev.type == SDL_QUIT)
 				return;
 		}
-                
 		this->render(window);
 	}
 }
 
 Renderer::Renderer() {
+  
 }
 
 Renderer::Renderer(const Renderer& orig) {

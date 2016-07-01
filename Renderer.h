@@ -11,14 +11,15 @@
  * Created on 28 juin 2016, 20:35
  */
 
+#include <iostream>
+#include <cstdlib>
+
+#include <GL/glew.h>
+#include <SDL2/SDL.h>
+
 /* My headers */
 #include "Shape.h"
 #include "Shader.h"
-
-#include <iostream>
-#include <cstdlib>
-#include <GL/glew.h>
-#include <SDL2/SDL.h>
 
 
 
@@ -37,8 +38,9 @@ public:
     void render(SDL_Window*);
     void drawShape(Shape* shape);
 private:
-    Shape* myShape;
+    GLuint program;
     GLint attribute_coord2d;
+    Shape* myShape; 
 };
 
 #endif /* RENDERER_H */

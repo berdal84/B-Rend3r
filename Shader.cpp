@@ -16,7 +16,6 @@
 using namespace std;
 
 Shader::Shader() {
-
 }
 
 Shader::Shader(const Shader& orig) {
@@ -30,7 +29,7 @@ bool Shader::compile(){
     compileVertexShader();
     compileFragmentShader();
     linkProgram();
-    //bindAttributes();
+    bindAttributes();
     
     cout << "Shader ready." << endl;
 
@@ -89,7 +88,7 @@ bool Shader::compileFragmentShader(){
         "void main(void) {        "
         "  gl_FragColor[0] = 1.0; "
         "  gl_FragColor[1] = 0.0; "
-        "  gl_FragColor[2] = 1.0; "
+        "  gl_FragColor[2] = 0.0; "
         "}";
     glShaderSource(fragmentShader, 1, &fs_source, NULL);
     glCompileShader(fragmentShader);
@@ -111,7 +110,7 @@ bool Shader::linkProgram(){
 
     program = glCreateProgram();
     glAttachShader(program, vertexShader);
-    //glAttachShader(program, fragmentShader);
+    glAttachShader(program, fragmentShader);
     glLinkProgram(program);
     glGetProgramiv(program, GL_LINK_STATUS, &link_ok);
     if (!link_ok) {

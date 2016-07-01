@@ -38,10 +38,6 @@ Shape::Shape() {
     printVerticesCount();
 }
 
-Shape::Shape(Shader* shader){
-    Shape();
-    setShader(shader);
-}
 
 void Shape::setShader(Shader* shader){
     this->shader = shader;
@@ -66,11 +62,6 @@ void Shape::pushVertex(GLfloat x, GLfloat y){
     vertices[numberOfElements++] = y;
 }
 
-void Shape::pushVertex(GLfloat x, GLfloat y, GLfloat z){
-    vertices[numberOfElements++] = x;
-    vertices[numberOfElements++] = y;
-    vertices[numberOfElements++] = z;
-}
 
 int Shape::getNumberOfElementsPerVertex(){
     return this->numberOfElementsPerVertex;
