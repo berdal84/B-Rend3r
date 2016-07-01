@@ -1,13 +1,22 @@
-/* Using standard C++ output libraries */
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/* 
+ * File:   main.cpp
+ * Author: Bérenger Dalle-Cort
+ * 
+ * Created on 26 juin 2016
+ */
+
 #include <cstdlib>
 #include <iostream>
+#include <GL/glew.h>
+#include <SDL2/SDL.h>
 
 #include "Renderer.h"
-
-/* Use glew.h instead of gl.h to get all the GL prototypes declared */
-#include <GL/glew.h>
-/* Using SDL2 for the base window and OpenGL context init */
-#include <SDL2/SDL.h>
 
 using namespace std;
 
@@ -28,18 +37,12 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
-        /* Instanciate the renderer (OpenGL) */
         Renderer renderer;
-        
-	/* Try to initialise*/
 	if (!renderer.initResources())
 		return EXIT_FAILURE;
 
-	/* We can display something if everything goes OK */
 	renderer.mainLoop(window);
 
-	/* If the program exits in the usual way,
-	   free resources and exit with a success */
 	renderer.freeResources();
         
 	return EXIT_SUCCESS;

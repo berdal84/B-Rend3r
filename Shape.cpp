@@ -17,6 +17,8 @@ using namespace std;
 
 Shape::Shape() {
     
+    cout << "Creating a new Shape..." << endl;
+    
     numberOfElementsPerVertex = 2;
     numberOfElements = 0;
  
@@ -34,8 +36,22 @@ Shape::Shape() {
     pushVertex(0.0, 0.0);    
 
     printVerticesCount();
- 
 }
+
+Shape::Shape(Shader* shader){
+    Shape();
+    setShader(shader);
+}
+
+void Shape::setShader(Shader* shader){
+    this->shader = shader;
+    cout << "Setting shader to the shape..." << endl;
+}
+
+Shader* Shape::getShader(){
+    return this->shader;
+}
+
 
 Shape::Shape(const Shape& orig) {
     cout << "blu!!!";
@@ -48,6 +64,12 @@ GLfloat* Shape::getVertices(){
 void Shape::pushVertex(GLfloat x, GLfloat y){
     vertices[numberOfElements++] = x;
     vertices[numberOfElements++] = y;
+}
+
+void Shape::pushVertex(GLfloat x, GLfloat y, GLfloat z){
+    vertices[numberOfElements++] = x;
+    vertices[numberOfElements++] = y;
+    vertices[numberOfElements++] = z;
 }
 
 int Shape::getNumberOfElementsPerVertex(){

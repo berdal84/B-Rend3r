@@ -11,6 +11,7 @@
  * Created on 27 juin 2016, 19:28
  */
 
+
 #ifndef SHAPE_H
 #define SHAPE_H
 
@@ -18,10 +19,12 @@
 #include <cstdlib>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include "Shader.h"
 
 class Shape {
 public:
     Shape();
+    Shape(Shader* shader);
     GLfloat* getVertices();
     int getVerticesBufferSize();
     int getVerticesCoordCount();
@@ -31,10 +34,14 @@ public:
     int getNumberOfElementsPerVertex();
     int getVerticesCount();    
     void pushVertex(GLfloat x, GLfloat y);
+    void pushVertex(GLfloat x, GLfloat y, GLfloat z);
+    Shader* getShader();
+    void setShader(Shader* shader);
 private:
     int numberOfElementsPerVertex;
     int numberOfElements;
     GLfloat *vertices;
+    Shader* shader;
 };
 
 #endif /* SHAPE_H */

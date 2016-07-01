@@ -11,16 +11,15 @@
  * Created on 28 juin 2016, 20:35
  */
 
-#include <iostream>
-#include <cstdlib>
-
-/* Use glew.h instead of gl.h to get all the GL prototypes declared */
-#include <GL/glew.h>
-/* Using SDL2 for the base window and OpenGL context init */
-#include <SDL2/SDL.h>
-
 /* My headers */
 #include "Shape.h"
+#include "Shader.h"
+
+#include <iostream>
+#include <cstdlib>
+#include <GL/glew.h>
+#include <SDL2/SDL.h>
+
 
 
 #ifndef RENDERER_H
@@ -38,9 +37,8 @@ public:
     void render(SDL_Window*);
     void drawShape(Shape* shape);
 private:
-    GLuint program;
+    Shape* myShape;
     GLint attribute_coord2d;
-    Shape myShape; 
 };
 
 #endif /* RENDERER_H */
