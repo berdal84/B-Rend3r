@@ -1,0 +1,42 @@
+# depslib dependency file v1.0
+1468156194 source:/home/dallecortb/turtl3D/main.cpp
+	<cstdlib>
+	<iostream>
+	<GL/glew.h>
+	<SDL2/SDL.h>
+	"Renderer.h"
+
+1467572980 /home/dallecortb/turtl3D/Renderer.h
+	<iostream>
+	<cstdlib>
+	<GL/glew.h>
+	<SDL2/SDL.h>
+	"Shader.h"
+	"Shape.h"
+
+1468258066 /home/dallecortb/turtl3D/Shader.h
+	<iostream>
+	<cstdlib>
+	<GL/glew.h>
+	<string>
+
+1467573163 /home/dallecortb/turtl3D/Shape.h
+	<iostream>
+	<cstdlib>
+	<GL/glew.h>
+	<SDL2/SDL.h>
+	"Shader.h"
+
+1468258081 source:/home/dallecortb/turtl3D/Renderer.cpp
+	"Renderer.h"
+	"Shape.h"
+
+1468258375 source:/home/dallecortb/turtl3D/Shader.cpp
+	"Shader.h"
+	<iostream>
+	<string>
+	<fstream>
+
+1467404905 source:/home/dallecortb/turtl3D/Shape.cpp
+	"Shape.h"
+
