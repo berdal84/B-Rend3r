@@ -4,37 +4,38 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Renderer.cpp
  * Author: Bérenger Dalle-Cort <contact@dalle-cort.fr>
- * 
+ *
  * Created on 28 juin 2016, 20:35
  */
 
 #include "Renderer.h"
-   
+#include "Shape.h"
+
 using namespace std;
 
 bool Renderer::initResources() {
 
     // Create a default shape with a default shader and compile it.
-    myShape = new Shape();    
-    myShape->setShader(new Shader() );    
-    if (!myShape->getShader()->compile())
-        return false;
-    
+    myShape = new Shape();
+
+    myShape->setShader(Shader::createShader("./shaders/default") );
+
+
     return true;
 }
 
 void Renderer::drawShape(Shape* shape){
-    
+
     Shader* shader = shape->getShader();
-    
+
     glUseProgram(shader->getProgram());
-   
+
     glEnableVertexAttribArray(shader->getAttributeCoord3D() );
- 
-     
+
+
     /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
     glVertexAttribPointer(
         shader->getAttributeCoord3D(),      // attribute
@@ -44,16 +45,16 @@ void Renderer::drawShape(Shape* shape){
         0,                      // no extra data between each position
         shape->getVertices()        // pointer to the C array
     );
-   
-    
 
-    
-    
+
+
+
+
     /* Push each element in buffer_vertices to the vertex shader */
     glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount() * shape->getNumberOfElementsPerVertex());
-    
+
     glDisableVertexAttribArray(shader->getAttributeCoord3D());
-    
+
 
 }
 
@@ -85,7 +86,7 @@ void Renderer::mainLoop(SDL_Window* window) {
 }
 
 Renderer::Renderer() {
-  
+
 }
 
 Renderer::Renderer(const Renderer& orig) {

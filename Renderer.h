@@ -17,10 +17,8 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
-/* My headers */
-#include "Shape.h"
 #include "Shader.h"
-
+#include "Shape.h"
 
 
 #ifndef RENDERER_H

@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   main.cpp
  * Author: Bérenger Dalle-Cort
- * 
+ *
  * Created on 26 juin 2016
  */
 
@@ -21,7 +21,7 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-    
+
 	/* SDL-related initialising functions */
 	SDL_Init(SDL_INIT_VIDEO);
 	SDL_Window* window = SDL_CreateWindow("Turtl3D - v0.1",
@@ -44,6 +44,6 @@ int main(int argc, char* argv[]) {
 	renderer.mainLoop(window);
 
 	renderer.freeResources();
-        
+
 	return EXIT_SUCCESS;
 }

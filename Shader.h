@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Shader.h
  * Author: Bérenger Dalle-Cort <contact@dalle-cort.fr>
  *
@@ -19,26 +19,29 @@
 #include <iostream>
 #include <cstdlib>
 #include <GL/glew.h>
+#include <string>
 
 class Shader {
 public:
+    static Shader* createShader(const std::string& fileName);
     Shader();
     Shader(const Shader& orig);
     virtual ~Shader();
     GLuint getProgram();
     GLint getAttributeCoord3D();
-    bool compile();
+    std::string loadFile(const std::string& fileName);
+    bool compile(const std::string& shaderFilePath);
 
-    
-private:    
+
+private:
     GLuint vertexShader;
     GLuint fragmentShader;
     GLuint program;
     GLint attribute_coord3d;
-    
+
     bool bindAttributes();
-    bool compileVertexShader();
-    bool compileFragmentShader();
+    bool compileVertexShader(const std::string& vs_source);
+    bool compileFragmentShader(const std::string& vs_source);
     bool linkProgram();
 
 };
