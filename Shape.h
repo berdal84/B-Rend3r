@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-/* 
+/*
  * File:   Shape.h
  * Author: dallecortb
  *
@@ -32,16 +32,26 @@ public:
     virtual ~Shape();
     void printVerticesCount();
     int getNumberOfElementsPerVertex();
-    int getVerticesCount();    
+    int getVerticesCount();
     void pushVertex(GLfloat x, GLfloat y);
     void pushVertex(GLfloat x, GLfloat y, GLfloat z);
     Shader* getShader();
     void setShader(Shader* shader);
+
+    float getPositionX(){return positionX;};
+    float getPositionY(){return positionY;};
+    void setPositionX(float _x){positionX = _x;};
+    void setPositionY(float _y){positionY = _y;};
+
 private:
     int numberOfElementsPerVertex;
     int numberOfElements;
     GLfloat *vertices;
     Shader* shader;
+
+    float positionX= 0.0f;
+    float positionY = 0.0f;
+
 };
 
 #endif /* SHAPE_H */

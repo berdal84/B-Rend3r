@@ -40,8 +40,8 @@ private:
     GLint attribute_coord3d;
 
     bool bindAttributes();
-    bool compileVertexShader(const std::string& vs_source);
-    bool compileFragmentShader(const std::string& vs_source);
+    bool createVertexShader(const std::string& vs_source);
+    bool createFragmentShader(const std::string& vs_source);
     bool linkProgram();
 
 };

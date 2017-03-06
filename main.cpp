@@ -24,8 +24,7 @@ int main(int argc, char* argv[]) {
 
 	/* SDL-related initialising functions */
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Window* window = SDL_CreateWindow("Turtl3D - v0.1",
-		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+	SDL_Window* window = SDL_CreateWindow("Turtl3D - v0.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
 		640, 480,
 		SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
 	SDL_GL_CreateContext(window);

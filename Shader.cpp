@@ -53,7 +53,7 @@ std::string Shader::loadFile(const std::string& fileName){
 
     }
 
-    cout << code << endl;
+    //cout << code << endl;
 
     return &code[0];
 }
@@ -66,8 +66,8 @@ Shader::~Shader() {
 
 bool Shader::compile(const std::string& shaderFilePath){
 
-    this->compileVertexShader(this->loadFile(shaderFilePath +".vs"));
-    this->compileFragmentShader(this->loadFile(shaderFilePath +".fs"));
+    this->createVertexShader(this->loadFile(shaderFilePath +".vs"));
+    this->createFragmentShader(this->loadFile(shaderFilePath +".fs"));
 
     this->linkProgram();
     this->bindAttributes();
@@ -79,7 +79,7 @@ GLint Shader::getAttributeCoord3D(){
     return attribute_coord3d;
 }
 
-bool Shader::compileVertexShader(const std::string& source){
+bool Shader::createVertexShader(const std::string& source){
 
     cout << "Compiling vertex shader..." << endl;
 
@@ -93,15 +93,17 @@ bool Shader::compileVertexShader(const std::string& source){
 
     glCompileShader(vertexShader);
     glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &compile_ok);
+
     if (!compile_ok) {
         cerr << "Error in vertex shader compilation" << endl;
+
         return false;
     }
 
     return true;
 }
 
-bool Shader::compileFragmentShader(const std::string& source){
+bool Shader::createFragmentShader(const std::string& source){
     cout << "Compiling fragment shader..." << endl;
 
     GLint compile_ok = GL_FALSE, link_ok = GL_FALSE;

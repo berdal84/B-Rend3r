@@ -23,37 +23,39 @@ bool Renderer::initResources() {
 
     myShape->setShader(Shader::createShader("./shaders/default") );
 
+    myShape->setPositionX(-1.0f);
 
     return true;
 }
 
-void Renderer::drawShape(Shape* shape){
+void Renderer::drawShape(Shape& shape){
 
-    Shader* shader = shape->getShader();
+    Shader& shader          = *(shape.getShader());
+    GLuint shaderProgram    = shader.getProgram();
 
-    glUseProgram(shader->getProgram());
+    glUseProgram(shaderProgram);
 
-    glEnableVertexAttribArray(shader->getAttributeCoord3D() );
+    glVertexAttrib2f(glGetAttribLocation(shaderProgram, "position"),  shape.getPositionX(), shape.getPositionY() );
+
+    glEnableVertexAttribArray(shader.getAttributeCoord3D() );
 
 
     /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
     glVertexAttribPointer(
-        shader->getAttributeCoord3D(),      // attribute
-        shape->getNumberOfElementsPerVertex(),                      // number of elements per vertex, here (x,y)
+        shader.getAttributeCoord3D(),      // attribute
+        shape.getNumberOfElementsPerVertex(),                      // number of elements per vertex, here (x,y)
         GL_FLOAT,               // the type of each element
         GL_FALSE,               // take our values as-is
         0,                      // no extra data between each position
-        shape->getVertices()        // pointer to the C array
+        shape.getVertices()        // pointer to the C array
     );
 
 
 
-
-
     /* Push each element in buffer_vertices to the vertex shader */
-    glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount() * shape->getNumberOfElementsPerVertex());
+    glDrawArrays(GL_TRIANGLES, 0, shape.getVerticesCount() * shape.getNumberOfElementsPerVertex());
 
-    glDisableVertexAttribArray(shader->getAttributeCoord3D());
+    glDisableVertexAttribArray(shader.getAttributeCoord3D());
 
 
 }
@@ -64,14 +66,18 @@ void Renderer::render(SDL_Window* window) {
     glClearColor(0.5, 0.5,0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    drawShape(myShape);
+    /* Test of moving my vertices */
+    myShape->setPositionX(myShape->getPositionX() + 0.01f);
+
+    /* drawing shapes */
+    drawShape(*myShape);
 
     /* Display the result */
     SDL_GL_SwapWindow(window);
 }
 
 void Renderer::freeResources() {
-  glDeleteProgram(myShape->getShader()->getProgram());
+  glDeleteProgram((*myShape).getShader()->getProgram());
 }
 
 void Renderer::mainLoop(SDL_Window* window) {
