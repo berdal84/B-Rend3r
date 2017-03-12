@@ -32,7 +32,6 @@ public:
     std::string loadFile(const std::string& fileName);
     bool compile(const std::string& shaderFilePath);
 
-
 private:
     GLuint vertexShader;
     GLuint fragmentShader;

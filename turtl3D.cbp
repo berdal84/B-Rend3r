@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,7 +47,11 @@
 		<Unit filename="Shader.h" />
 		<Unit filename="Shape.cpp" />
 		<Unit filename="Shape.h" />
+		<Unit filename="include/Matrix.h" />
+		<Unit filename="include/Model.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Matrix.cpp" />
+		<Unit filename="src/Model.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />

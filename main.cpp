@@ -37,8 +37,11 @@ int main(int argc, char* argv[]) {
 	}
 
         Renderer renderer;
-	if (!renderer.initResources())
+	if (!renderer.initResources()){
+		cerr << "Error: unable to initialize renderer resources.";
 		return EXIT_FAILURE;
+    }
+
 
 	renderer.mainLoop(window);
 

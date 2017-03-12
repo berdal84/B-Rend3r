@@ -18,66 +18,83 @@ using namespace std;
 
 bool Renderer::initResources() {
 
+    Model* model[20];
+
+
     // Create a default shape with a default shader and compile it.
-    myShape = new Shape();
+    Shape* myShape = new Shape();
+    Shader* shader = Shader::createShader("./shaders/default");
+    cout << shader;
 
-    myShape->setShader(Shader::createShader("./shaders/default") );
+    myShape->setShader(shader);
 
-    myShape->setPositionX(-1.0f);
+
+    model[0]    = new Model(myShape);
+
+    model[0]->setPosition(-1.0f, 0.0f);
 
     return true;
 }
 
-void Renderer::drawShape(Shape& shape){
+void Renderer::drawModel(Model* model){
+    Shape* shape    = model->getShape();
+    Matrix* matrix  = model->getMatrix();
+    if (shape && matrix){
+        drawShape(shape, matrix);
+    }
 
-    Shader& shader          = *(shape.getShader());
-    GLuint shaderProgram    = shader.getProgram();
+}
+
+void Renderer::drawShape(Shape* shape, Matrix* matrix){
+
+    Shader* shader          = shape->getShader();
+    cout << shader;
+    GLuint shaderProgram    = shader->getProgram();
 
     glUseProgram(shaderProgram);
 
-    glVertexAttrib2f(glGetAttribLocation(shaderProgram, "position"),  shape.getPositionX(), shape.getPositionY() );
+    glVertexAttrib2f(glGetAttribLocation(shaderProgram, "position"),  shape->getPositionX(), shape->getPositionY() );
 
-    glEnableVertexAttribArray(shader.getAttributeCoord3D() );
+    glEnableVertexAttribArray(shader->getAttributeCoord3D() );
 
 
     /* Describe our vertices array to OpenGL (it can't guess its format automatically) */
     glVertexAttribPointer(
-        shader.getAttributeCoord3D(),      // attribute
-        shape.getNumberOfElementsPerVertex(),                      // number of elements per vertex, here (x,y)
+        shader->getAttributeCoord3D(),      // attribute
+        shape->getNumberOfElementsPerVertex(),                      // number of elements per vertex, here (x,y)
         GL_FLOAT,               // the type of each element
         GL_FALSE,               // take our values as-is
         0,                      // no extra data between each position
-        shape.getVertices()        // pointer to the C array
+        shape->getVertices()        // pointer to the C array
     );
 
 
 
     /* Push each element in buffer_vertices to the vertex shader */
-    glDrawArrays(GL_TRIANGLES, 0, shape.getVerticesCount() * shape.getNumberOfElementsPerVertex());
+    glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount() * shape->getNumberOfElementsPerVertex());
 
-    glDisableVertexAttribArray(shader.getAttributeCoord3D());
+    glDisableVertexAttribArray(shader->getAttributeCoord3D());
 
 
 }
 
 void Renderer::render(SDL_Window* window) {
     /* Clear the background as white */
-
     glClearColor(0.5, 0.5,0.5, 1.0);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    /* Test of moving my vertices */
-    myShape->setPositionX(myShape->getPositionX() + 0.01f);
-
-    /* drawing shapes */
-    drawShape(*myShape);
+    /* move and draw the first model */
+    model[0]->translate(0.01f, 0);
+    drawModel(model[0]);
 
     /* Display the result */
     SDL_GL_SwapWindow(window);
 }
 
 void Renderer::freeResources() {
-  glDeleteProgram((*myShape).getShader()->getProgram());
+
+    for(Model* m : model)
+        delete m;
 }
 
 void Renderer::mainLoop(SDL_Window* window) {
@@ -91,7 +108,7 @@ void Renderer::mainLoop(SDL_Window* window) {
 	}
 }
 
-Renderer::Renderer() {
+Renderer::Renderer(){
 
 }
 

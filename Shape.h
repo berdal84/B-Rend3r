@@ -24,7 +24,6 @@
 class Shape {
 public:
     Shape();
-    Shape(Shader* shader);
     GLfloat* getVertices();
     int getVerticesBufferSize();
     int getVerticesCoordCount();
@@ -49,8 +48,8 @@ private:
     GLfloat *vertices;
     Shader* shader;
 
-    float positionX= 0.0f;
-    float positionY = 0.0f;
+    float positionX;
+    float positionY;
 
 };
 

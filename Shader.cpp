@@ -26,8 +26,7 @@ Shader::Shader() {
 
 Shader* Shader::createShader(const std::string& shaderFilePath){
 
-    Shader* shader;
-    shader = new Shader();
+    Shader* shader = new Shader();
 
     shader->compile(shaderFilePath);
 
@@ -83,7 +82,7 @@ bool Shader::createVertexShader(const std::string& source){
 
     cout << "Compiling vertex shader..." << endl;
 
-    GLint compile_ok = GL_FALSE, link_ok = GL_FALSE;
+    GLint compile_ok = GL_FALSE;
 
     vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -96,7 +95,7 @@ bool Shader::createVertexShader(const std::string& source){
 
     if (!compile_ok) {
         cerr << "Error in vertex shader compilation" << endl;
-
+        cout << c_str;
         return false;
     }
 
@@ -106,7 +105,7 @@ bool Shader::createVertexShader(const std::string& source){
 bool Shader::createFragmentShader(const std::string& source){
     cout << "Compiling fragment shader..." << endl;
 
-    GLint compile_ok = GL_FALSE, link_ok = GL_FALSE;
+    GLint compile_ok = GL_FALSE;
 
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -118,6 +117,7 @@ bool Shader::createFragmentShader(const std::string& source){
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &compile_ok);
     if (!compile_ok) {
         cerr << "Error in fragment shader compilation" << endl;
+        cout << c_str;
         return false;
     }
 
@@ -126,7 +126,7 @@ bool Shader::createFragmentShader(const std::string& source){
 }
 
 bool Shader::linkProgram(){
-    GLint compile_ok = GL_FALSE, link_ok = GL_FALSE;
+    GLint link_ok = GL_FALSE;
     cout << "Attaching shaders to program and linking it..." << endl;
 
     // Link the vertex and fragment shaders to the GLSL program

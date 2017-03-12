@@ -21,6 +21,7 @@
 
 #include "Shader.h"
 #include "Shape.h"
+#include "Model.h"
 
 class Renderer {
 public:
@@ -30,13 +31,15 @@ public:
 
     bool initResources();
     void freeResources();
-    void mainLoop(SDL_Window*);
-    void render(SDL_Window*);
-    void drawShape(Shape& shape);
+
+    void mainLoop   (SDL_Window*);
+    void render     (SDL_Window*);
+    void drawModel  (Model* model);
+    void drawShape  (Shape* shape, Matrix* matrix);
 private:
     GLuint program;
     GLint attribute_coord2d;
-    Shape* myShape;
+    Model* model[];
 };
 
 #endif /* RENDERER_H */

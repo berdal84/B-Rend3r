@@ -1,42 +1,56 @@
 # depslib dependency file v1.0
-1488833839 source:/home/dallecortb/turtl3D/main.cpp
+1489352451 source:/home/dallecortb/turtl3D/main.cpp
 	<cstdlib>
 	<iostream>
 	<GL/glew.h>
 	<SDL2/SDL.h>
 	"Renderer.h"
 
-1488836444 /home/dallecortb/turtl3D/Renderer.h
+1489353521 /home/dallecortb/turtl3D/Renderer.h
 	<iostream>
 	<cstdlib>
 	<GL/glew.h>
 	<SDL2/SDL.h>
 	"Shader.h"
 	"Shape.h"
+	"Model.h"
 
-1488833839 /home/dallecortb/turtl3D/Shader.h
+1489348002 /home/dallecortb/turtl3D/Shader.h
 	<iostream>
 	<cstdlib>
 	<GL/glew.h>
 	<string>
 
-1488837148 /home/dallecortb/turtl3D/Shape.h
+1489353893 /home/dallecortb/turtl3D/Shape.h
 	<iostream>
 	<cstdlib>
 	<GL/glew.h>
 	<SDL2/SDL.h>
 	"Shader.h"
 
-1488837531 source:/home/dallecortb/turtl3D/Renderer.cpp
+1489354491 source:/home/dallecortb/turtl3D/Renderer.cpp
 	"Renderer.h"
 	"Shape.h"
 
-1488835409 source:/home/dallecortb/turtl3D/Shader.cpp
+1489354161 source:/home/dallecortb/turtl3D/Shader.cpp
 	"Shader.h"
 	<iostream>
 	<string>
 	<fstream>
 
-1488837124 source:/home/dallecortb/turtl3D/Shape.cpp
+1489354224 source:/home/dallecortb/turtl3D/Shape.cpp
 	"Shape.h"
+
+1489351165 /home/dallecortb/turtl3D/include/Model.h
+	"Matrix.h"
+	"../Shape.h"
+
+1489350903 /home/dallecortb/turtl3D/include/Matrix.h
+	<stdlib.h>
+
+1489351027 source:/home/dallecortb/turtl3D/src/Matrix.cpp
+	"Matrix.h"
+
+1489351177 source:/home/dallecortb/turtl3D/src/Model.cpp
+	"Model.h"
 

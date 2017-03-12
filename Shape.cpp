@@ -15,7 +15,7 @@
 
 using namespace std;
 
-Shape::Shape() {
+Shape::Shape():shader(NULL),positionX(0.0f), positionY(0.0f){
 
     cout << "Creating a new Shape..." << endl;
 
@@ -39,12 +39,13 @@ Shape::Shape() {
 }
 
 
-void Shape::setShader(Shader* shader){
-    this->shader = shader;
+void Shape::setShader(Shader* _shader){
+    this->shader = _shader;
     cout << "Setting shader to the shape..." << endl;
 }
 
 Shader* Shape::getShader(){
+
     return this->shader;
 }
 
