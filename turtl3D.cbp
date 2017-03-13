@@ -41,17 +41,17 @@
 			<Add option="-I/usr/include/SDL2" />
 			<Add option="-lSDL2 -lGLEW -lGL" />
 		</Linker>
-		<Unit filename="Renderer.cpp" />
-		<Unit filename="Renderer.h" />
-		<Unit filename="Shader.cpp" />
-		<Unit filename="Shader.h" />
-		<Unit filename="Shape.cpp" />
-		<Unit filename="Shape.h" />
-		<Unit filename="include/Matrix.h" />
-		<Unit filename="include/Model.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Matrix.cpp" />
+		<Unit filename="src/Matrix.h" />
 		<Unit filename="src/Model.cpp" />
+		<Unit filename="src/Model.h" />
+		<Unit filename="src/Renderer.cpp" />
+		<Unit filename="src/Renderer.h" />
+		<Unit filename="src/Shader.cpp" />
+		<Unit filename="src/Shader.h" />
+		<Unit filename="src/Shape.cpp" />
+		<Unit filename="src/Shape.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

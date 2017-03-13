@@ -16,7 +16,7 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
-#include "Renderer.h"
+#include "src/Renderer.h"
 
 using namespace std;
 

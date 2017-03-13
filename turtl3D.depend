@@ -54,3 +54,17 @@
 1489435176 source:/home/dallecortb/turtl3D/src/Model.cpp
 	"Model.h"
 
+1489433488 /home/dallecortb/turtl3D/src/Matrix.h
+	<stdlib.h>
+
+1489443386 /home/dallecortb/turtl3D/src/Model.h
+	"Matrix.h"
+	"Shape.h"
+	<iostream>
+
+1489433423 /home/dallecortb/turtl3D/src/Shape.h
+	<iostream>
+	<cstdlib>
+	<GL/glew.h>
+	<SDL2/SDL.h>
+

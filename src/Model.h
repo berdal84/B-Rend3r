@@ -2,7 +2,7 @@
 #define MODEL_H
 
 #include "Matrix.h"
-#include "../Shape.h"
+#include "Shape.h"
 #include <iostream>
 
 class Model
