@@ -6,7 +6,7 @@
 	<SDL2/SDL.h>
 	"Renderer.h"
 
-1489353521 /home/dallecortb/turtl3D/Renderer.h
+1489433596 /home/dallecortb/turtl3D/Renderer.h
 	<iostream>
 	<cstdlib>
 	<GL/glew.h>
@@ -21,14 +21,13 @@
 	<GL/glew.h>
 	<string>
 
-1489353893 /home/dallecortb/turtl3D/Shape.h
+1489433423 /home/dallecortb/turtl3D/Shape.h
 	<iostream>
 	<cstdlib>
 	<GL/glew.h>
 	<SDL2/SDL.h>
-	"Shader.h"
 
-1489354491 source:/home/dallecortb/turtl3D/Renderer.cpp
+1489436039 source:/home/dallecortb/turtl3D/Renderer.cpp
 	"Renderer.h"
 	"Shape.h"
 
@@ -41,16 +40,17 @@
 1489354224 source:/home/dallecortb/turtl3D/Shape.cpp
 	"Shape.h"
 
-1489351165 /home/dallecortb/turtl3D/include/Model.h
+1489434217 /home/dallecortb/turtl3D/include/Model.h
 	"Matrix.h"
 	"../Shape.h"
+	<iostream>
 
-1489350903 /home/dallecortb/turtl3D/include/Matrix.h
+1489433488 /home/dallecortb/turtl3D/include/Matrix.h
 	<stdlib.h>
 
-1489351027 source:/home/dallecortb/turtl3D/src/Matrix.cpp
+1489433477 source:/home/dallecortb/turtl3D/src/Matrix.cpp
 	"Matrix.h"
 
-1489351177 source:/home/dallecortb/turtl3D/src/Model.cpp
+1489435176 source:/home/dallecortb/turtl3D/src/Model.cpp
 	"Model.h"
 

@@ -17,29 +17,36 @@
 using namespace std;
 
 bool Renderer::initResources() {
-
-    Model* model[20];
-
+    SDL_GL_SetSwapInterval(1/60);
 
     // Create a default shape with a default shader and compile it.
     Shape* myShape = new Shape();
     Shader* shader = Shader::createShader("./shaders/default");
-    cout << shader;
-
     myShape->setShader(shader);
 
+    Model* myModel = new Model(myShape);
+    myModel->setName("Modele001");
+    myModel->setPosition(-1.0f, 0.0f);
 
-    model[0]    = new Model(myShape);
-
-    model[0]->setPosition(-1.0f, 0.0f);
+    model[0]=myModel;
 
     return true;
 }
 
 void Renderer::drawModel(Model* model){
+    //cout << "Drawing model :" << model << endl;
+
     Shape* shape    = model->getShape();
     Matrix* matrix  = model->getMatrix();
-    if (shape && matrix){
+
+    bool hasShape   = shape!=nullptr;
+    bool hasMatrix  = matrix!=nullptr;
+
+    if ( !hasShape ){
+        cerr << "The model " << model << " has no Shape attached." << endl;
+    }else if (!hasMatrix){
+        cerr << "The model " << model << " has no Matrix attached." << endl;
+    }else{
         drawShape(shape, matrix);
     }
 
@@ -48,7 +55,6 @@ void Renderer::drawModel(Model* model){
 void Renderer::drawShape(Shape* shape, Matrix* matrix){
 
     Shader* shader          = shape->getShader();
-    cout << shader;
     GLuint shaderProgram    = shader->getProgram();
 
     glUseProgram(shaderProgram);
@@ -79,11 +85,16 @@ void Renderer::drawShape(Shape* shape, Matrix* matrix){
 }
 
 void Renderer::render(SDL_Window* window) {
+    cout << "Renderer::render" << endl;
+
     /* Clear the background as white */
-    glClearColor(0.5, 0.5,0.5, 1.0);
+    glClearColor(0.4f, 0.1f ,0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     /* move and draw the first model */
+    if(model[0]->getShape()->getPositionX() > 2.0f)
+        model[0]->setPosition(-2.f, 0.f);
+
     model[0]->translate(0.01f, 0);
     drawModel(model[0]);
 
@@ -92,9 +103,8 @@ void Renderer::render(SDL_Window* window) {
 }
 
 void Renderer::freeResources() {
-
     for(Model* m : model)
-        delete m;
+        if (m)delete m;
 }
 
 void Renderer::mainLoop(SDL_Window* window) {

@@ -12,7 +12,7 @@ class Matrix
         virtual ~Matrix();
 
     protected:
-        float _matrix[];
+        float _matrix[3*3];
 
     private:
 };

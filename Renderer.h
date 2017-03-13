@@ -39,7 +39,7 @@ public:
 private:
     GLuint program;
     GLint attribute_coord2d;
-    Model* model[];
+    Model* model[256];
 };
 
 #endif /* RENDERER_H */

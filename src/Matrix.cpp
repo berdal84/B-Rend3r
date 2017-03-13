@@ -1,11 +1,9 @@
 #include "Matrix.h"
 
-Matrix::Matrix():
-{
-    _matrix = new float[3*3];
+Matrix::Matrix(){
+
 }
 
-Matrix::~Matrix()
-{
-    delete _matrix;
+Matrix::~Matrix(){
+
 }

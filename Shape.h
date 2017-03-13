@@ -19,9 +19,11 @@
 #include <cstdlib>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include "Shader.h"
+
+class Shader;
 
 class Shape {
+
 public:
     Shape();
     GLfloat* getVertices();
