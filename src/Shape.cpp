@@ -15,7 +15,7 @@
 
 using namespace std;
 
-Shape::Shape():shader(NULL),positionX(0.0f), positionY(0.0f){
+Shape::Shape():shader(NULL){
 
     cout << "Creating a new Shape..." << endl;
 

@@ -10,8 +10,7 @@
  *
  * Created on 28 juin 2016, 20:35
  */
-#ifndef RENDERER_H
-#define RENDERER_H
+#pragma once
 
 #include <iostream>
 #include <cstdlib>
@@ -35,12 +34,10 @@ public:
     void mainLoop   (SDL_Window*);
     void render     (SDL_Window*);
     void drawModel  (Model* model);
-    void drawShape  (Shape* shape, Matrix* matrix);
+    void drawShape  (Shape* shape, Transform* matrix);
 private:
     GLuint program;
     GLint attribute_coord2d;
     Model* model[256];
 };
-
-#endif /* RENDERER_H */
 

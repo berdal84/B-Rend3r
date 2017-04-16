@@ -26,7 +26,7 @@ bool Renderer::initResources() {
 
     Model* myModel = new Model(myShape);
     myModel->setName("Modele001");
-    myModel->setPosition(-1.0f, 0.0f);
+    myModel->setPosition(vec3(-2.0f, 0.f, 0.f));
 
     model[0]=myModel;
 
@@ -37,7 +37,7 @@ void Renderer::drawModel(Model* model){
     //cout << "Drawing model :" << model << endl;
 
     Shape* shape    = model->getShape();
-    Matrix* matrix  = model->getMatrix();
+    Transform* matrix  = model->getMatrix();
 
     bool hasShape   = shape!=nullptr;
     bool hasMatrix  = matrix!=nullptr;
@@ -52,14 +52,14 @@ void Renderer::drawModel(Model* model){
 
 }
 
-void Renderer::drawShape(Shape* shape, Matrix* matrix){
+void Renderer::drawShape(Shape* shape, Transform* matrix){
 
     Shader* shader          = shape->getShader();
     GLuint shaderProgram    = shader->getProgram();
 
     glUseProgram(shaderProgram);
 
-    glVertexAttrib2f(glGetAttribLocation(shaderProgram, "position"),  shape->getPositionX(), shape->getPositionY() );
+    glVertexAttrib2f(glGetAttribLocation(shaderProgram, "position"),  matrix->getPositionX(), matrix->getPositionY() );
 
     glEnableVertexAttribArray(shader->getAttributeCoord3D() );
 
@@ -91,11 +91,17 @@ void Renderer::render(SDL_Window* window) {
     glClearColor(0.4f, 0.1f ,0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    /* move and draw the first model */
-    if(model[0]->getShape()->getPositionX() > 2.0f)
-        model[0]->setPosition(-2.f, 0.f);
 
-    model[0]->translate(0.01f, 0);
+    Transform* tr = model[0]->getMatrix();
+    bool isObjectOffscreen = tr->getPosition().x > 2.0f;
+    if(isObjectOffscreen)
+    {
+        tr->setPosition(vec3(-2.0f, 0.f, 0.f));
+    }
+
+    vec3 offset(0.01f, 0.f, 0.f);
+    model[0]->translate(offset);
+
     drawModel(model[0]);
 
     /* Display the result */

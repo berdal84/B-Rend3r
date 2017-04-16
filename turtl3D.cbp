@@ -42,8 +42,6 @@
 			<Add option="-lSDL2 -lGLEW -lGL" />
 		</Linker>
 		<Unit filename="main.cpp" />
-		<Unit filename="src/Matrix.cpp" />
-		<Unit filename="src/Matrix.h" />
 		<Unit filename="src/Model.cpp" />
 		<Unit filename="src/Model.h" />
 		<Unit filename="src/Renderer.cpp" />
@@ -52,6 +50,8 @@
 		<Unit filename="src/Shader.h" />
 		<Unit filename="src/Shape.cpp" />
 		<Unit filename="src/Shape.h" />
+		<Unit filename="src/Transform.cpp" />
+		<Unit filename="src/Transform.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

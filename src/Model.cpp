@@ -1,30 +1,28 @@
 #include "Model.h"
 
 
-Model::Model():_shape(NULL),_matrix(NULL)
+Model::Model():_shape(NULL),_transform(NULL)
 {
-    _matrix = new Matrix();
+    _transform = new Transform();
 }
 
-Model::Model(Shape* shape):_shape(shape),_matrix(NULL)
+Model::Model(Shape* shape):_shape(shape),_transform(NULL)
 {
-    _matrix = new Matrix();
+    _transform = new Transform();
 }
 
-void Model::translate(float x, float y)
+void Model::translate(vec3 _offset)
 {
-    _shape->setPositionX(_shape->getPositionX() + x); /* TODO : use the matrix */
-    _shape->setPositionY(_shape->getPositionY() + y);
+    _transform->translate(_offset);
 }
 
-void Model::setPosition(float x, float y)
+void Model::setPosition(vec3 _position)
 {
-    _shape->setPositionX(x);                            /*TODO : use the matrix */
-    _shape->setPositionY(y);
+    _transform->setPosition(_position);
 }
 
 Model::~Model()
 {
-    delete _matrix;
+    delete _transform;
     delete _shape;
 }

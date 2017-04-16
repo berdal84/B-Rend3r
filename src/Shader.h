@@ -10,11 +10,7 @@
  *
  * Created on 1 juillet 2016, 19:14
  */
-
-
-
-#ifndef SHADER_H
-#define SHADER_H
+#pragma once
 
 #include <iostream>
 #include <cstdlib>
@@ -39,11 +35,8 @@ private:
     GLint attribute_coord3d;
 
     bool bindAttributes();
-    bool createVertexShader(const std::string& vs_source);
-    bool createFragmentShader(const std::string& vs_source);
+    bool compileVS(const std::string& vs_source);
+    bool compileFS(const std::string& vs_source);
     bool linkProgram();
 
 };
-
-#endif /* SHADER_H */
-

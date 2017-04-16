@@ -1,7 +1,6 @@
-#ifndef MODEL_H
-#define MODEL_H
+#pragma once
 
-#include "Matrix.h"
+#include "Transform.h"
 #include "Shape.h"
 #include <iostream>
 
@@ -13,13 +12,13 @@ class Model
 
         virtual ~Model();
 
-        void            translate(      float x, float y);
-        void            setPosition(    float x, float y);
+        void            translate(vec3 _offset);
+        void            setPosition(vec3 position);
 
         Shape*          getShape()                  { return _shape; }
         void            setShape(Shape* shape)      { _shape = shape; }
-        Matrix*         getMatrix()                 { return _matrix; }
-        void            setMatrix(Matrix* matrix)   { _matrix = matrix; }
+        Transform*      getMatrix()                 { return _transform; }
+        void            setMatrix(Transform* matrix)   { _transform = matrix; }
         unsigned int    getId()                     { return _id; }
         void            setId(unsigned int val)     { _id = val; }
         void            setName(char* name)         { _name = name;}
@@ -29,10 +28,8 @@ class Model
     private:
         char*           _name;
         Shape*          _shape;
-        Matrix*         _matrix;
+        Transform*      _transform;
         unsigned int    _id;
 
     friend std::ostream& operator<<(std::ostream& stream, Model* model){ stream << model->getName(); return stream;}
 };
-
-#endif // MODEL_H
