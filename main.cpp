@@ -13,7 +13,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include <GL/glew.h>
+
 #include <SDL2/SDL.h>
 
 #include "src/Renderer.h"
