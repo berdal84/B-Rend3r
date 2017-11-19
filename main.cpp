@@ -10,13 +10,11 @@
  *
  * Created on 26 juin 2016
  */
-
 #include <cstdlib>
 #include <iostream>
 #include <GL/glew.h>
+#include <SDL2/SDL.h>
 #include "src/Renderer.h"
-
-using namespace std;
 
 int main(int argc, char* argv[]) {
 
@@ -30,13 +28,13 @@ int main(int argc, char* argv[]) {
 	/* Extension wrangler initialising */
 	GLenum glew_status = glewInit();
 	if (glew_status != GLEW_OK) {
-		cerr << "Error: glewInit: " << glewGetErrorString(glew_status) << endl;
+		std::cerr << "Error: glewInit: " << glewGetErrorString(glew_status) << std::endl;
 		return EXIT_FAILURE;
 	}
 
         Renderer renderer;
 	if (!renderer.initResources()){
-		cerr << "Error: unable to initialize renderer resources.";
+		std::cerr << "Error: unable to initialize renderer resources.";
 		return EXIT_FAILURE;
     }
 
