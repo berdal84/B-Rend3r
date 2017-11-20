@@ -34,7 +34,8 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
-    Renderer renderer;
+    Renderer renderer(vec2(640.0f, 480.0f));
+    
 	if (!renderer.initResources()){
 		std::cerr << "Error: unable to initialize renderer resources.";
 		return EXIT_FAILURE;

@@ -2,9 +2,8 @@
 #version 120  // OpenGL 2.1
 
 attribute vec2 coord2d;
-attribute vec2 position;
-
+uniform   mat4 worldMatrix;
+uniform   mat4 viewMatrix;
 void main(void) {
-  gl_Position = vec4(coord2d.x + position.x, coord2d.y + position.y,0,1); 
-  //gl_Position = vec4(coord2d,0, 1); 
+  gl_Position = viewMatrix * worldMatrix * vec4(coord2d.x, coord2d.y,0.0,1.0); 
 }

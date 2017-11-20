@@ -2,44 +2,28 @@
 
 #include <stdlib.h>
 #include <math.h>
-
-typedef struct vec3 vec3;
-
-struct vec3{
-    vec3():x(0.f),y(0.f),z(0.f){};
-    vec3(float _x, float _y, float _z):x(_x),y(_y),z(_z){};
-    float x;
-    float y;
-    float z;
-
-    vec3 operator+=(vec3 _right)
-    {
-        x += _right.x;
-        y += _right.y;
-        z += _right.z;
-        return *this;
-    }
-};
-
-
+#include "Trigonometry.h"
 
 class Transform
 {
     public:
-        /** Default constructor */
         Transform();
-        /** Default destructor */
         virtual ~Transform();
-        void translate(vec3 _offset);
-        void setPosition(vec3 position){_position = position; }
-        vec3 getPosition(){return _position;}
-        float getPositionX(){return _position.x;}
-        float getPositionY(){return _position.y;}
-    protected:
-        float _transform[4*4];
-        vec3 _position;
-        vec3 _rotation;
-        vec3 _scale;
+        void translate    (vec3 _offset);
+        void setScale     (vec3 _scale){scale = _scale;};
+        void setPosition  (vec3 _position){position = _position; }
+        void setRotation  (vec3 _rotation){rotation = _rotation; }
+        vec3 getPosition  ()const{return position;}
+        void updateMatrix ();
+        mat4 getMatrix()const {return matrix;}
 
-    private:
+        static mat4 Translate (vec3 _position);
+        static mat4 Rotate    (vec3 _rotation);
+        static mat4 Scale     (vec3 _scale);
+
+    private:       
+        vec3 position;
+        vec3 rotation;
+        vec3 scale; 
+        mat4 matrix;   
 };

@@ -20,7 +20,7 @@
 using namespace std;
 
 bool Renderer::initResources() {
-    SDL_GL_SetSwapInterval(1/60);
+    SDL_GL_SetSwapInterval(1/120);
 
     // Create a default shape with a default shader and compile it.
     Shape* myShape = Shape::CreatePlane();
@@ -40,29 +40,44 @@ void Renderer::drawModel(Model* model){
     //cout << "Drawing model :" << model << endl;
 
     Shape* shape    = model->getShape();
-    Transform* matrix  = model->getMatrix();
+    Transform* tr  = model->getTransform();
 
     bool hasShape   = shape!=nullptr;
-    bool hasMatrix  = matrix!=nullptr;
+    bool hasTransform  = tr!=nullptr;
 
     if ( !hasShape ){
         cerr << "The model " << model << " has no Shape attached." << endl;
-    }else if (!hasMatrix){
-        cerr << "The model " << model << " has no Matrix attached." << endl;
+    }else if (!hasTransform){
+        cerr << "The model " << model << " has no Transform attached." << endl;
     }else{
-        drawShape(shape, matrix);
+        drawShape(shape, tr);
     }
 
 }
 
-void Renderer::drawShape(Shape* shape, Transform* matrix){
+void Renderer::drawShape(Shape* shape, Transform* tr){
 
     Shader* shader          = shape->getShader();
     GLuint shaderProgram    = shader->getProgram();
 
     glUseProgram(shaderProgram);
 
-    glVertexAttrib2f(glGetAttribLocation(shaderProgram, "position"),  matrix->getPositionX(), matrix->getPositionY() );
+    /* bind world matrix */
+    {
+    GLint loc = glGetUniformLocation(shaderProgram, "worldMatrix");
+        if (loc != -1){
+        glUniformMatrix4fv(loc, 1, GL_FALSE, (GLfloat*)&tr->getMatrix()[0][0]);
+        }
+    }
+
+    /* bind view matrix */
+    {
+    GLint loc = glGetUniformLocation(shaderProgram, "viewMatrix");
+        if (loc != -1){
+            mat4 viewMatrix = Transform::Scale(vec3(viewportSize.y / viewportSize.x, 1.0f, 1.0f));
+            glUniformMatrix4fv(loc, 1, GL_FALSE, (GLfloat*)&viewMatrix);
+        }
+    }
 
     glEnableVertexAttribArray(shader->getAttributeCoord3D() );
 
@@ -94,17 +109,6 @@ void Renderer::render(SDL_Window* window) {
     glClearColor(0.4f, 0.1f ,0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-
-    Transform* tr = model[0]->getMatrix();
-    bool isObjectOffscreen = tr->getPosition().x > 2.0f;
-    if(isObjectOffscreen)
-    {
-        tr->setPosition(vec3(-2.0f, 0.f, 0.f));
-    }
-
-    vec3 offset(0.01f, 0.f, 0.f);
-    model[0]->translate(offset);
-
     drawModel(model[0]);
 
     /* Display the result */
@@ -117,26 +121,46 @@ void Renderer::freeResources() {
 }
 
 bool Renderer::update(SDL_Window* window) {
+    bool quit = false;
+
+    /* Listen events */
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch(event.type){
         case SDL_QUIT:
-			return false;
+			quit = true;
             break;
         case SDL_WINDOWEVENT:
             if ( event.window.event == SDL_WINDOWEVENT_RESIZED){
                 auto width  = event.window.data1;
                 auto height = event.window.data2;
                 glViewport(0,0,width, height); 
+                viewportSize.x = width;
+                viewportSize.y = height;
             }                    
             break;
 	   }
     }
-    return true;
+
+    /* Update models */
+    Transform* tr = model[0]->getTransform();
+    bool isObjectOffscreen = tr->getPosition().x > 2.0f;
+    if(isObjectOffscreen)
+    {
+        tr->setPosition(vec3(-2.0f, 0.f, 0.f));
+    }
+
+    vec3 offset(0.001f, 0.f, 0.f);
+    tr->translate(offset);
+    tr->setRotation(vec3(0.0f, 0.0f, tr->getPosition().x * 10.0f));
+    tr->setScale(vec3(0.5f,0.5f,0.5f));
+    tr->updateMatrix();
+
+    return !quit;
 }
 
-Renderer::Renderer(){
-
+Renderer::Renderer(vec2 _viewportSize){
+    viewportSize = _viewportSize;
 }
 
 Renderer::Renderer(const Renderer& orig) {

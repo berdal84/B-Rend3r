@@ -81,14 +81,14 @@ Shape* Shape::CreatePlane()
     plane->reserveVertices(6);
 
     /* First triangle */
-    plane->pushVertex(0.0, 0.0);
-    plane->pushVertex(0.8, 0.0);
-    plane->pushVertex(0.8, 0.8);
+    plane->pushVertex(-0.5, -0.5);
+    plane->pushVertex(0.5, -0.5);
+    plane->pushVertex(0.5, 0.5);
 
     /* second triangle */
-    plane->pushVertex(0.8, 0.8);
-    plane->pushVertex(0.0, 0.8);
-    plane->pushVertex(0.0, 0.0);
+    plane->pushVertex(0.5, 0.5);
+    plane->pushVertex(-0.5, 0.5);
+    plane->pushVertex(-0.5, -0.5);
 
     plane->printVerticesCount();
 

@@ -23,6 +23,11 @@ void Model::setPosition(vec3 _position)
     _transform->setPosition(_position);
 }
 
+void Model::setScale(vec3 _scale)
+{
+    _transform->setScale(_scale);
+}
+
 Model::~Model()
 {
     delete _transform;

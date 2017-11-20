@@ -18,6 +18,7 @@
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include "Trigonometry.h"
 
 /* Forward declaration */
 class Shader;
@@ -27,7 +28,7 @@ class Transform;
 
 class Renderer {
 public:
-    Renderer();
+    Renderer(vec2 _viewportSize);
     Renderer(const Renderer& orig);
     virtual ~Renderer();
 
@@ -42,5 +43,6 @@ private:
     GLuint program;
     GLint attribute_coord2d;
     std::vector<Model*> model;
+    vec2 viewportSize;
 };
 
