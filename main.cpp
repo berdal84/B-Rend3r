@@ -20,9 +20,11 @@ int main(int argc, char* argv[]) {
 
 	/* SDL-related initialising functions */
 	SDL_Init(SDL_INIT_VIDEO);
-	SDL_Window* window = SDL_CreateWindow("Turtl3D - v0.1", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+	SDL_Window* window = SDL_CreateWindow("B-Rend3r - v0.1", 
+		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
 		640, 480,
 		SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+	
 	SDL_GL_CreateContext(window);
 
 	/* Extension wrangler initialising */
@@ -32,15 +34,16 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
 	}
 
-        Renderer renderer;
+    Renderer renderer;
 	if (!renderer.initResources()){
 		std::cerr << "Error: unable to initialize renderer resources.";
 		return EXIT_FAILURE;
     }
-
-
-	renderer.mainLoop(window);
-
+    
+    while( renderer.update(window))
+    {
+    	renderer.render(window);
+    }
 	renderer.freeResources();
 
 	return EXIT_SUCCESS;

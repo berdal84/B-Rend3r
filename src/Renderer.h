@@ -14,13 +14,16 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <vector>
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
-#include "Shader.h"
-#include "Shape.h"
-#include "Model.h"
+/* Forward declaration */
+class Shader;
+class Shape;
+class Model;
+class Transform;
 
 class Renderer {
 public:
@@ -31,13 +34,13 @@ public:
     bool initResources();
     void freeResources();
 
-    void mainLoop   (SDL_Window*);
+    bool update     (SDL_Window*);
     void render     (SDL_Window*);
     void drawModel  (Model* model);
     void drawShape  (Shape* shape, Transform* matrix);
 private:
     GLuint program;
     GLint attribute_coord2d;
-    Model* model[256];
+    std::vector<Model*> model;
 };
 

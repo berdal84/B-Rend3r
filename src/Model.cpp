@@ -1,14 +1,16 @@
 #include "Model.h"
 
 
-Model::Model():_shape(NULL),_transform(NULL)
+Model::Model():_shape(nullptr),_transform(nullptr)
 {
     _transform = new Transform();
 }
 
-Model::Model(Shape* shape):_shape(shape),_transform(NULL)
+Model* Model::Create(Shape* shape)
 {
-    _transform = new Transform();
+	Model* model = new Model();
+	model->_shape     = shape;
+	return model;
 }
 
 void Model::translate(vec3 _offset)

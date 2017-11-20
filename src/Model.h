@@ -8,7 +8,7 @@ class Model
 {
     public:
         Model();
-        Model(Shape *shape);
+        
 
         virtual ~Model();
 
@@ -23,7 +23,8 @@ class Model
         void            setId(unsigned int val)     { _id = val; }
         void            setName(char* name)         { _name = name;}
         char*           getName()                   { return _name;}
-    protected:
+    
+        static Model*   Create(Shape *shape);
 
     private:
         char*           _name;

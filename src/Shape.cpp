@@ -16,26 +16,6 @@
 using namespace std;
 
 Shape::Shape():shader(NULL){
-
-    cout << "Creating a new Shape..." << endl;
-
-    numberOfElementsPerVertex = 2;
-    numberOfElements = 0;
-
-    /* reserve memory for six  2D vertices */
-    vertices = new GLfloat[6 * numberOfElementsPerVertex];
-
-    /* First triangle */
-    pushVertex(0.0, 0.0);
-    pushVertex(0.8, 0.0);
-    pushVertex(0.8, 0.8);
-
-    /* second triangle */
-    pushVertex(0.8, 0.8);
-    pushVertex(0.0, 0.8);
-    pushVertex(0.0, 0.0);
-
-    printVerticesCount();
 }
 
 
@@ -83,5 +63,35 @@ void Shape::printVerticesCount(){
 // note : for cleaning memory...
 Shape::~Shape() {
 
+}
+
+void Shape::reserveVertices(size_t n)
+{
+    this->vertices = new GLfloat[n * numberOfElementsPerVertex];
+}
+
+Shape* Shape::CreatePlane()
+{
+    cout << "Shape::CreatePlane." << endl;
+    Shape* plane = new Shape();
+
+    plane->numberOfElementsPerVertex = 2;
+
+    /* reserve memory for six  2D vertices */
+    plane->reserveVertices(6);
+
+    /* First triangle */
+    plane->pushVertex(0.0, 0.0);
+    plane->pushVertex(0.8, 0.0);
+    plane->pushVertex(0.8, 0.8);
+
+    /* second triangle */
+    plane->pushVertex(0.8, 0.8);
+    plane->pushVertex(0.0, 0.8);
+    plane->pushVertex(0.0, 0.0);
+
+    plane->printVerticesCount();
+
+    return plane;
 }
 
