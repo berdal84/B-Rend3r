@@ -1,4 +1,5 @@
 #include "Transform.h"
+#include <cmath>
 
 Transform::Transform():
     position(0.f, 0.f, 0.f),
