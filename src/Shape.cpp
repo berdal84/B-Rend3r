@@ -12,10 +12,12 @@
  */
 
 #include "Shape.h"
+#include <math.h>
+#include "Trigonometry.h"
 
 using namespace std;
 
-Shape::Shape():shader(NULL){
+Shape::Shape():shader(nullptr){
 }
 
 
@@ -49,7 +51,7 @@ int Shape::getNumberOfElementsPerVertex(){
 }
 
 int Shape::getVerticesBufferSize(){
-    return sizeof(vertices)/sizeof(GLfloat);
+    return numberOfElements * sizeof(GLfloat);
 }
 
 int Shape::getVerticesCount(){
@@ -95,3 +97,27 @@ Shape* Shape::CreatePlane()
     return plane;
 }
 
+Shape* Shape::CreateCircle(size_t segments)
+{
+    cout << "Shape::CreatePlane." << endl;
+    Shape* shape = new Shape();
+
+    shape->numberOfElementsPerVertex = 2;
+
+    /* reserve memory for segment vertices */
+    shape->reserveVertices(3 * segments);
+
+    /* build triangle by triangle (segment by segment)*/
+    for( size_t i=0; i < segments; i++)
+    {
+        shape->pushVertex(0.0f, 0.0f);
+        float angle1 = radians((360.0f / segments) * i);
+        float angle2 = radians((360.0f / segments ) * (i + 1));     
+        shape->pushVertex(cos(angle1) ,sin(angle1)); 
+        shape->pushVertex(cos(angle2) ,sin(angle2));
+    }
+
+    shape->printVerticesCount();
+
+    return shape;
+}

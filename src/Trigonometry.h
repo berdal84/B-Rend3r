@@ -1,4 +1,16 @@
 #pragma once
+#define PI 3.1415926535897
+
+static float radians(float _degrees)
+{
+
+    return _degrees / 180.0f * PI;
+}
+
+static float degrees(float _radians)
+{
+    return _radians / PI * 180.0f;
+}
 
 /* mat4 are column major */
 class mat4{
@@ -53,6 +65,7 @@ class vec3{
 public:
     vec3():x(0.f),y(0.f),z(0.f){};
     vec3(float _x, float _y, float _z):x(_x),y(_y),z(_z){};
+    vec3(float _v):x(_v),y(_v),z(_v){};
     ~vec3(){};
     float x;
     float y;

@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     	t1 = clock();
     	dt = (float)(t1 - t0)/CLOCKS_PER_SEC * 1000.0f;
 
-    	std::cout << "dt = " << dt << std::endl;
+    	//std::cout << "dt = " << dt << std::endl;
     }
 	renderer.freeResources();
 

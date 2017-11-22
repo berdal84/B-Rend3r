@@ -36,12 +36,13 @@ public:
     Shader* getShader();
     void setShader(Shader* shader);
     void reserveVertices(size_t n);
-    static Shape* CreatePlane();
 
+    static Shape* CreatePlane();
+    static Shape* CreateCircle(size_t segments = 16);
 private:
-    int numberOfElementsPerVertex = 3;
-    int numberOfElements = 0;
-    GLfloat *vertices = nullptr;
-    Shader* shader = nullptr;
+    int numberOfElementsPerVertex   = 2;
+    int numberOfElements            = 0;
+    GLfloat *vertices               = nullptr;
+    Shader* shader                  = nullptr;
 
 };

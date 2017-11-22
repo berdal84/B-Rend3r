@@ -21,13 +21,13 @@ using namespace std;
 
 bool Renderer::initResources() {
     // Create a default shape with a default shader and compile it.
-    Shape* myShape = Shape::CreatePlane();
+    Shape* myShape = Shape::CreateCircle();
     Shader* shader = Shader::CreateVsFs("./shaders/default");
     myShape->setShader(shader);
 
     Model* myModel = Model::Create(myShape);
     myModel->setName("Modele001");
-    myModel->setPosition(vec3(0.0f, 0.0f, 0.0f));
+    myModel->setPosition(vec3(0.0f, 1.0f, 0.8f));
 
     model.push_back(myModel);
 
@@ -101,7 +101,7 @@ void Renderer::drawShape(Shape* shape, Transform* tr){
 }
 
 void Renderer::render(SDL_Window* window) {
-    cout << "Renderer::render" << endl;
+    //cout << "Renderer::render" << endl;
 
     /* Clear the background as white */
     glClearColor(0.4f, 0.1f ,0.1f, 1.0f);
@@ -145,12 +145,12 @@ bool Renderer::update(SDL_Window* window, float _dt) {
     bool isObjectOffscreen = tr->getPosition().x > 2.0f;
     if(isObjectOffscreen)
     {
-        tr->setPosition(vec3(-2.0f, 0.f, 0.f));
+        tr->setPosition(vec3(-2.0f, 0.f, 0.8f));
     }
     
     tr->translate    (vec3( 0.25f * _dt, 0.f, 0.f));
-    tr->rotate       (vec3(0.0f, 0.0f, 1.0f * _dt));
-    tr->setScale     (vec3(0.5f,0.5f,0.5f));
+    tr->rotate       (vec3(0.0f, 0.0f,0.0f));
+    tr->setScale     (vec3(0.5f));
     tr->updateMatrix ();
 
     return !quit;

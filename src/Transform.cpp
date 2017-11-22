@@ -39,10 +39,10 @@ mat4 Transform::Translate (vec3 _position)
 mat4 Transform::Rotate    (vec3 _rotation)
 {
 	mat4 m;
-	m[0][0] = std::cos(_rotation.z);
-	m[1][0] = std::sin(_rotation.z);
-	m[0][1] = -std::sin(_rotation.z);
-	m[1][1] = std::cos(_rotation.z);
+	m[0][0] = std::cos(radians(_rotation.z));
+	m[1][0] = std::sin(radians(_rotation.z));
+	m[0][1] = -std::sin(radians(_rotation.z));
+	m[1][1] = std::cos(radians(_rotation.z));
 	return m;
 }
 
