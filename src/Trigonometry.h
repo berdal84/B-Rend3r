@@ -24,6 +24,7 @@ public:
         m[3][2] = 0.0f;
         m[3][3] = 1.0f;
     };
+    ~mat4(){};
 
     float* operator[](size_t n){
         return m[n];
@@ -52,21 +53,19 @@ class vec3{
 public:
     vec3():x(0.f),y(0.f),z(0.f){};
     vec3(float _x, float _y, float _z):x(_x),y(_y),z(_z){};
+    ~vec3(){};
     float x;
     float y;
     float z;
 
-    vec3 operator+=(vec3 _right)
+    vec3 operator+(vec3 _right)
     {
-        x += _right.x;
-        y += _right.y;
-        z += _right.z;
-        return *this;
+        return vec3(this->x + _right.x, this->y + _right.y, this->z + _right.z );
     };
 
-    vec3 operator*(float f)
+    vec3 operator*(float factor)
     {
-        return vec3(x*f, y*f, z*f);
+        return vec3(this->x*factor, this->y*factor, this->z*factor);
     };
 
 private:
@@ -77,19 +76,18 @@ class vec2{
 public:
     vec2():x(0.f),y(0.f){};
     vec2(float _x, float _y):x(_x),y(_y){};
+    ~vec2(){};
+
     float x;
     float y;
-
-    vec2 operator+=(vec2 _right)
+    vec2 operator+(vec2 _right)
     {
-        x += _right.x;
-        y += _right.y;
-        return *this;
+        return vec2(this->x + _right.x, this->y + _right.y);
     };
 
-    vec2 operator*(float f)
+    vec2 operator*(float factor)
     {
-        return vec2(x*f, y*f);
+        return vec2(this->x*factor, this->y*factor);
     };
 
 private:

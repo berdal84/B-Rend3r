@@ -35,7 +35,7 @@ public:
     bool initResources();
     void freeResources();
 
-    bool update     (SDL_Window*);
+    bool update     (SDL_Window*, float _dt);
     void render     (SDL_Window*);
     void drawModel  (Model* model);
     void drawShape  (Shape* shape, Transform* matrix);

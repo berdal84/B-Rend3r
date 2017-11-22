@@ -15,6 +15,7 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 #include "src/Renderer.h"
+#include <ctime>
 
 int main(int argc, char* argv[]) {
 
@@ -41,9 +42,13 @@ int main(int argc, char* argv[]) {
 		return EXIT_FAILURE;
     }
     
-    while( renderer.update(window))
+    
+    clock_t t;
+    t = clock();
+    while( renderer.update(window,((float)t)/CLOCKS_PER_SEC))
     {
     	renderer.render(window);
+    	t = clock() - t;
     }
 	renderer.freeResources();
 

@@ -8,8 +8,9 @@ class Transform
 {
     public:
         Transform();
-        virtual ~Transform();
+        ~Transform();
         void translate    (vec3 _offset);
+        void rotate       (vec3 _offset);
         void setScale     (vec3 _scale){scale = _scale;};
         void setPosition  (vec3 _position){position = _position; }
         void setRotation  (vec3 _rotation){rotation = _rotation; }

@@ -29,7 +29,7 @@ bool Renderer::initResources() {
 
     Model* myModel = Model::Create(myShape);
     myModel->setName("Modele001");
-    myModel->setPosition(vec3(-2.0f, 0.f, 0.f));
+    myModel->setPosition(vec3(0.0f, 0.f, 0.f));
 
     model.push_back(myModel);
 
@@ -120,7 +120,7 @@ void Renderer::freeResources() {
         delete m;
 }
 
-bool Renderer::update(SDL_Window* window) {
+bool Renderer::update(SDL_Window* window, float _dt) {
     bool quit = false;
 
     /* Listen events */
@@ -149,12 +149,11 @@ bool Renderer::update(SDL_Window* window) {
     {
         tr->setPosition(vec3(-2.0f, 0.f, 0.f));
     }
-
-    vec3 offset(0.001f, 0.f, 0.f);
-    tr->translate(offset);
-    tr->setRotation(vec3(0.0f, 0.0f, tr->getPosition().x * 10.0f));
-    tr->setScale(vec3(0.5f,0.5f,0.5f));
-    tr->updateMatrix();
+    
+    tr->translate    (vec3( 0.05f * _dt, 0.f, 0.f));
+    tr->rotate       (vec3(0.0f, 0.0f, 0.1f * _dt));
+    tr->setScale     (vec3(0.5f,0.5f,0.5f));
+    tr->updateMatrix ();
 
     return !quit;
 }
