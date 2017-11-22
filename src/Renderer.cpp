@@ -20,8 +20,6 @@
 using namespace std;
 
 bool Renderer::initResources() {
-    SDL_GL_SetSwapInterval(1/120);
-
     // Create a default shape with a default shader and compile it.
     Shape* myShape = Shape::CreatePlane();
     Shader* shader = Shader::CreateVsFs("./shaders/default");
@@ -29,7 +27,7 @@ bool Renderer::initResources() {
 
     Model* myModel = Model::Create(myShape);
     myModel->setName("Modele001");
-    myModel->setPosition(vec3(0.0f, 0.f, 0.f));
+    myModel->setPosition(vec3(0.0f, 0.0f, 0.0f));
 
     model.push_back(myModel);
 
@@ -150,8 +148,8 @@ bool Renderer::update(SDL_Window* window, float _dt) {
         tr->setPosition(vec3(-2.0f, 0.f, 0.f));
     }
     
-    tr->translate    (vec3( 0.05f * _dt, 0.f, 0.f));
-    tr->rotate       (vec3(0.0f, 0.0f, 0.1f * _dt));
+    tr->translate    (vec3( 0.25f * _dt, 0.f, 0.f));
+    tr->rotate       (vec3(0.0f, 0.0f, 1.0f * _dt));
     tr->setScale     (vec3(0.5f,0.5f,0.5f));
     tr->updateMatrix ();
 

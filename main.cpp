@@ -43,12 +43,20 @@ int main(int argc, char* argv[]) {
     }
     
     
-    clock_t t;
-    t = clock();
-    while( renderer.update(window,((float)t)/CLOCKS_PER_SEC))
+    clock_t t0, t1;
+    float dt = 0.0f;
+
+    t0 = clock();
+    t1 = clock();
+    
+    while( renderer.update(window, dt))
     {
-    	renderer.render(window);
-    	t = clock() - t;
+    	renderer.render(window);    	
+    	t0 = t1;
+    	t1 = clock();
+    	dt = (float)(t1 - t0)/CLOCKS_PER_SEC * 1000.0f;
+
+    	std::cout << "dt = " << dt << std::endl;
     }
 	renderer.freeResources();
 

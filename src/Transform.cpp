@@ -24,7 +24,7 @@ void Transform::rotate(vec3 _offset){
 
 void Transform::updateMatrix()
 {
-	this->matrix = Translate(position);// * Rotate(rotation) * Scale(scale);
+	this->matrix = Translate(position) * Rotate(rotation) * Scale(scale);
 }
 
 mat4 Transform::Translate (vec3 _position)
