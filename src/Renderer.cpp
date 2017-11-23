@@ -21,7 +21,7 @@ using namespace std;
 
 bool Renderer::initResources() {
     // Create a default shape with a default shader and compile it.
-    Shape* myShape = Shape::CreateCircle();
+    Shape* myShape = Shape::CreateCircle(64);
     Shader* shader = Shader::CreateVsFs("./shaders/default");
     myShape->setShader(shader);
 
@@ -93,7 +93,7 @@ void Renderer::drawShape(Shape* shape, Transform* tr){
 
 
     /* Push each element in buffer_vertices to the vertex shader */
-    glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount() * shape->getNumberOfElementsPerVertex());
+    glDrawArrays(GL_TRIANGLES, 0, shape->getVerticesCount());
 
     glDisableVertexAttribArray(shader->getAttributeCoord3D());
 
