@@ -8,22 +8,23 @@ class Model
 {
     public:
         Model();
-        Model(Shape *shape);
+        
 
         virtual ~Model();
 
-        void            translate(vec3 _offset);
-        void            setPosition(vec3 position);
-
-        Shape*          getShape()                  { return _shape; }
-        void            setShape(Shape* shape)      { _shape = shape; }
-        Transform*      getMatrix()                 { return _transform; }
-        void            setMatrix(Transform* matrix)   { _transform = matrix; }
-        unsigned int    getId()                     { return _id; }
-        void            setId(unsigned int val)     { _id = val; }
-        void            setName(char* name)         { _name = name;}
-        char*           getName()                   { return _name;}
-    protected:
+        void            translate   (vec3 _offset);
+        void            setPosition (vec3 position);
+        void            setScale    (vec3 _scale);
+        Shape*          getShape    ()                  { return _shape; }
+        void            setShape    (Shape* shape)      { _shape = shape; }
+        Transform*      getTransform()                 { return _transform; }
+        void            setTransform(Transform* transform)   { _transform = transform; }
+        unsigned int    getId       ()                     { return _id; }
+        void            setId       (unsigned int val)     { _id = val; }
+        void            setName     (char* name)         { _name = name;}
+        char*           getName     ()                   { return _name;}
+    
+        static Model*   Create(Shape *shape);
 
     private:
         char*           _name;

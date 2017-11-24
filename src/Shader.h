@@ -19,7 +19,7 @@
 
 class Shader {
 public:
-    static Shader* createShader(const std::string& fileName);
+    static Shader* CreateVsFs(const std::string& fileName);
     Shader();
     Shader(const Shader& orig);
     virtual ~Shader();
@@ -35,8 +35,8 @@ private:
     GLint attribute_coord3d;
 
     bool bindAttributes();
-    bool compileVS(const std::string& vs_source);
-    bool compileFS(const std::string& vs_source);
+    bool compileVs(const std::string& vs_source);
+    bool compileFs(const std::string& vs_source);
     bool linkProgram();
 
 };

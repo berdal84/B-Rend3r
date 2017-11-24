@@ -17,10 +17,10 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
+/* Forward declaration */
 class Shader;
 
 class Shape {
-
 public:
     Shape();
     GLfloat* getVertices();
@@ -35,11 +35,14 @@ public:
     void pushVertex(GLfloat x, GLfloat y, GLfloat z);
     Shader* getShader();
     void setShader(Shader* shader);
+    void reserveVertices(size_t n);
 
+    static Shape* CreatePlane();
+    static Shape* CreateCircle(size_t segments = 16);
 private:
-    int numberOfElementsPerVertex;
-    int numberOfElements;
-    GLfloat *vertices;
-    Shader* shader;
+    int numberOfElementsPerVertex   = 2;
+    int numberOfElements            = 0;
+    GLfloat *vertices               = nullptr;
+    Shader* shader                  = nullptr;
 
 };

@@ -24,10 +24,9 @@ Shader::Shader() {
 
 }
 
-Shader* Shader::createShader(const std::string& shaderFilePath){
+Shader* Shader::CreateVsFs(const std::string& shaderFilePath){
 
     Shader* shader = new Shader();
-
     shader->compile(shaderFilePath);
 
     return shader;
@@ -65,8 +64,8 @@ Shader::~Shader() {
 
 bool Shader::compile(const std::string& shaderFilePath){
 
-    this->compileVS(this->loadFile(shaderFilePath +".vs"));
-    this->compileFS(this->loadFile(shaderFilePath +".fs"));
+    this->compileVs(this->loadFile(shaderFilePath +".vs"));
+    this->compileFs(this->loadFile(shaderFilePath +".fs"));
 
     this->linkProgram();
     this->bindAttributes();
@@ -78,7 +77,7 @@ GLint Shader::getAttributeCoord3D(){
     return attribute_coord3d;
 }
 
-bool Shader::compileVS(const std::string& source){
+bool Shader::compileVs(const std::string& source){
 
     cout << "Compiling vertex shader..." << endl;
 
@@ -102,7 +101,7 @@ bool Shader::compileVS(const std::string& source){
     return true;
 }
 
-bool Shader::compileFS(const std::string& source){
+bool Shader::compileFs(const std::string& source){
     cout << "Compiling fragment shader..." << endl;
 
     GLint compile_ok = GL_FALSE;
