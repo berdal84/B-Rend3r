@@ -56,6 +56,16 @@ public:
         return result;
     };
 
+    float getDeterminant() // TODO
+    {
+        return 0.0f;
+    }
+    mat4 getInverted() // TODO
+    {
+        mat4 result;
+        return result;
+    }
+
 private:
     float m[4][4];
 };
