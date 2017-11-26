@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Shape.h"
 #include <iostream>
+#include <string>
 
 class Camera
 {
@@ -24,13 +25,14 @@ class Camera
         Transform*      getViewTransform   ();
         unsigned int    getId              ()                     { return _id; }
         void            setId              (unsigned int val)     { _id = val; }
-        void            setName            (char* name)         { _name = name;}
-        char*           getName            ()                   { return _name;}
+        void            setName            (const char* name)         { _name = name;}
+        const char*     getName            ()                   { return _name.c_str();}
         void            setOrthographicSize(vec2 _size){ _orthographicSize = _size;}
-
+        void            updateViewTransform();
+        
         static Camera*  Create();
     private:
-        char*           _name             = nullptr;
+        std::string     _name;
         Transform*      _world            = nullptr;
         Transform*      _view             = nullptr;
         unsigned int    _id               = 0;

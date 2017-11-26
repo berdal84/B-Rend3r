@@ -1,5 +1,5 @@
 #include "Camera.h"
-
+#include "Transform.h"
 
 Camera::Camera()
 {
@@ -17,6 +17,16 @@ Camera* Camera::Create()
 Transform* Camera::getViewTransform()
 {
 	return _view;
+}
+
+void Camera::updateViewTransform()
+{
+	if ( _projection == Projection_Orthographic )
+	{
+		vec3 v(_orthographicSize.x, _orthographicSize.y, 1.0f);
+		_view->setScale(v);
+		_view->updateMatrix();
+	}
 }
 
 void Camera::translate(vec3 _offset)

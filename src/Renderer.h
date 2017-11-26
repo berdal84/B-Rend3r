@@ -25,6 +25,7 @@ class Shader;
 class Shape;
 class Model;
 class Transform;
+class Camera;
 
 class Renderer {
 public:
@@ -40,6 +41,7 @@ public:
     void drawModel  (Model* model);
     void drawShape  (Shape* shape, Transform* matrix);
 private:
+    Camera* currentCamera = nullptr;
     GLuint program;
     GLint attribute_coord2d;
     std::vector<Model*> model;

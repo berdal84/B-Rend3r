@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "Shape.h"
 #include <iostream>
+#include <string>
 
 class Model
 {
@@ -21,13 +22,13 @@ class Model
         void            setTransform(Transform* transform)   { _transform = transform; }
         unsigned int    getId       ()                     { return _id; }
         void            setId       (unsigned int val)     { _id = val; }
-        void            setName     (char* name)         { _name = name;}
-        char*           getName     ()                   { return _name;}
+        void            setName     (const char* name)         { _name = name;}
+        const char*     getName     ()                   { return _name.c_str();}
     
         static Model*   Create(Shape *shape);
 
     private:
-        char*           _name;
+        std::string     _name;
         Shape*          _shape;
         Transform*      _transform;
         unsigned int    _id;
