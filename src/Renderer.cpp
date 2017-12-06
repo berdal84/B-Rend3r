@@ -16,20 +16,27 @@
 #include "Shape.h"
 #include "Model.h"
 #include "Transform.h"
+#include "Camera.h"
 
 using namespace std;
 
 bool Renderer::initResources() {
+
     // Create a default shape with a default shader and compile it.
     Shape* myShape = Shape::CreateCircle(64);
-    Shader* shader = Shader::CreateVsFs("./shaders/default");
+    Shader* shader = Shader::CreateVsFs("../../shaders/default");
     myShape->setShader(shader);
 
     Model* myModel = Model::Create(myShape);
+    const char* name = "Modele001";
     myModel->setName("Modele001");
-    myModel->setPosition(vec3(0.0f, 1.0f, 0.8f));
-
+    myModel->setPosition(vec3(0.0f, 0.0f, 0.0f));
     model.push_back(myModel);
+
+    // Create a camera
+    auto cam = Camera::Create();
+    cam->setName("DefaultCamera");
+    this->currentCamera = cam;
 
     return true;
 }
@@ -68,12 +75,17 @@ void Renderer::drawShape(Shape* shape, Transform* tr){
         }
     }
 
+    std::cout <<  "World Matrix :"  << std::endl;
+    std::cout << tr->getMatrix();
+    
+
+
     /* bind view matrix */
     {
     GLint loc = glGetUniformLocation(shaderProgram, "viewMatrix");
         if (loc != -1){
-            mat4 viewMatrix = Transform::Scale(vec3(viewportSize.y / viewportSize.x, 1.0f, 1.0f));
-            glUniformMatrix4fv(loc, 1, GL_FALSE, (GLfloat*)&viewMatrix);
+            mat4 viewMatrix = currentCamera->getViewTransform()->getMatrix();
+            glUniformMatrix4fv(loc, 1, GL_FALSE, (GLfloat*)&viewMatrix.getInverse()[0][0]);
         }
     }
 
@@ -142,16 +154,36 @@ bool Renderer::update(SDL_Window* window, float _dt) {
 
     /* Update models */
     Transform* tr = model[0]->getTransform();
-    bool isObjectOffscreen = tr->getPosition().x > 2.0f;
+    bool isObjectOffscreen = tr->getPosition().x > viewportSize.x * 2.0f;
     if(isObjectOffscreen)
     {
-        tr->setPosition(vec3(-2.0f, 0.f, 0.8f));
+        tr->setPosition(vec3(-viewportSize.x * 2.0f, 0.f, 0.5f));
     }
     
-    tr->translate    (vec3( 0.25f * _dt, 0.f, 0.f));
+    tr->translate    (vec3( 100.0f * _dt, 0.f, 0.f));
     tr->rotate       (vec3(0.0f, 0.0f,0.0f));
-    tr->setScale     (vec3(0.5f));
+    tr->setScale     (vec3(50.0f * (2.0f + cos(tr->getPosition().x / 100.0f)) ));
     tr->updateMatrix ();
+
+    currentCamera->setOrthographicSize(viewportSize);
+    currentCamera->updateViewTransform();
+
+    /*
+    mat4 identity;
+    std::cout << identity;
+    std::cout << identity.inverse();
+    */
+
+    /*
+    std::cout << "Matrix :" << std::endl;
+    std::cout << tr->getMatrix();
+    std::cout << "Matrix Inverse :" << std::endl;
+    std::cout << tr->getMatrixInverse();
+    std::cout << "Matrix * MatInv :" << std::endl;
+    std::cout << tr->getMatrix()*tr->getMatrixInverse();
+    std::cout << "MatInv * Mat :" << std::endl;
+    std::cout << tr->getMatrixInverse()*tr->getMatrix();
+    */
 
     return !quit;
 }

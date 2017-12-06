@@ -1,5 +1,6 @@
 #pragma once
 #define PI 3.1415926535897
+#include <iostream>       // for implementation of operator <<
 
 static float radians(float _degrees)
 {
@@ -36,10 +37,41 @@ public:
         m[3][2] = 0.0f;
         m[3][3] = 1.0f;
     };
+
+    mat4(float f)
+    {
+        for(short i=0; i<4 ; i++)
+            for(short j=0 ; j<4; j++)
+                m[i][j] = f;
+    };
+
+    mat4(const mat4& m2)
+    {
+        for(short i=0; i<4 ; i++)
+            for(short j=0 ; j<4; j++)
+                m[i][j] = m2[i][j];
+    };
+
     ~mat4(){};
 
     float* operator[](size_t n){
         return m[n];
+    };
+
+    const float* operator[](size_t n)const{
+        return m[n];
+    };
+
+
+    mat4 operator/(float f)const
+    {
+        mat4 result;
+
+        for(short i=0; i<4 ; i++)
+            for(short j=0 ; j<4; j++)
+                result[i][j] = m[i][j] / f;
+
+        return result;
     };
 
     mat4 operator*(mat4 m2)
@@ -54,6 +86,201 @@ public:
             }
         }
         return result;
+    };
+
+    mat4 getTranspose()
+    {
+        mat4 result;
+
+        for(short i=0; i<4 ; i++)
+            for(short j=0 ; j<4; j++)
+                result[i][j] = m[j][i];
+
+        return result;
+    }
+    mat4 getInverse()
+    {
+
+        // Using this formula
+        // invA = (1 / det(A)) * cofactorTransposed(A)
+
+        mat4 cofactor;
+        // compute first column of factors
+        cofactor[0][0] =           m[1][1] * m[2][2] * m[3][3]
+                            + m[2][1] * m[3][2] * m[1][3]
+                            + m[3][1] * m[1][2] * m[2][3]
+
+                            - m[1][3] * m[2][2] * m[3][1]
+                            - m[2][3] * m[3][2] * m[1][1]
+                            - m[3][3] * m[1][2] * m[2][1];
+
+        cofactor[0][1] =       m[1][0] * m[2][2] * m[3][3]
+                            + m[2][0] * m[3][2] * m[1][3]
+                            + m[3][0] * m[1][2] * m[2][3]
+
+                            - m[1][3] * m[2][2] * m[3][0]
+                            - m[2][3] * m[3][2] * m[1][0]
+                            - m[3][3] * m[1][2] * m[2][0];
+
+        cofactor[0][2] =       m[1][0] * m[2][1] * m[3][3]
+                            + m[2][0] * m[3][1] * m[1][3]
+                            + m[3][0] * m[1][1] * m[2][3]
+
+                            - m[1][3] * m[2][1] * m[3][0]
+                            - m[2][3] * m[3][1] * m[1][0]
+                            - m[3][3] * m[1][1] * m[2][0];
+
+        cofactor[0][3] =       m[1][0] * m[2][1] * m[3][2]
+                            + m[2][0] * m[3][1] * m[1][2]
+                            + m[3][0] * m[1][1] * m[2][2]
+
+                            - m[1][2] * m[2][1] * m[3][0]
+                            - m[2][2] * m[3][1] * m[1][0]
+                            - m[3][2] * m[1][1] * m[2][0];
+
+        // compute second column of factors
+        cofactor[1][0] =       m[0][1] * m[2][2] * m[3][3]
+                            + m[2][1] * m[3][2] * m[0][3]
+                            + m[3][1] * m[0][2] * m[2][3]
+
+                            - m[0][3] * m[2][2] * m[3][1]
+                            - m[2][3] * m[3][2] * m[0][1]
+                            - m[3][3] * m[0][2] * m[2][1];
+
+        cofactor[1][1] =       m[0][0] * m[2][2] * m[3][3]
+                            + m[2][0] * m[3][2] * m[0][3]
+                            + m[3][0] * m[0][2] * m[2][3]
+
+                            - m[0][3] * m[2][2] * m[3][0]
+                            - m[2][3] * m[3][2] * m[0][0]
+                            - m[3][3] * m[0][2] * m[2][0];
+
+        cofactor[1][2] =       m[0][0] * m[2][1] * m[3][3]
+                            + m[2][0] * m[3][1] * m[0][3]
+                            + m[3][0] * m[0][1] * m[2][3]
+
+                            - m[0][3] * m[2][1] * m[3][0]
+                            - m[2][3] * m[3][1] * m[0][0]
+                            - m[3][3] * m[0][1] * m[2][0];
+
+        cofactor[1][3] =       m[0][0] * m[2][1] * m[3][2]
+                            + m[2][0] * m[3][1] * m[0][2]
+                            + m[3][0] * m[0][1] * m[2][2]
+
+                            - m[0][2] * m[2][1] * m[3][0]
+                            - m[2][2] * m[3][1] * m[0][0]
+                            - m[3][2] * m[0][1] * m[2][0];
+
+        // compute thrid column of factors
+
+        cofactor[2][0] =       m[0][1] * m[1][2] * m[3][3]
+                            + m[1][1] * m[3][2] * m[0][3]
+                            + m[3][1] * m[0][2] * m[1][3]
+
+                            - m[0][3] * m[1][2] * m[3][1]
+                            - m[1][3] * m[3][2] * m[0][1]
+                            - m[3][3] * m[0][2] * m[1][1];
+
+        cofactor[2][1] =       m[0][0] * m[1][2] * m[3][3]
+                            + m[1][0] * m[3][2] * m[0][3]
+                            + m[3][0] * m[0][2] * m[1][3]
+
+                            - m[0][3] * m[1][2] * m[3][0]
+                            - m[1][3] * m[3][2] * m[0][0]
+                            - m[3][3] * m[0][2] * m[1][0];
+
+        cofactor[2][2] =       m[0][0] * m[1][1] * m[3][3]
+                            + m[1][0] * m[3][1] * m[0][3]
+                            + m[3][0] * m[0][1] * m[1][3]
+
+                            - m[0][3] * m[1][1] * m[3][0]
+                            - m[1][3] * m[3][1] * m[0][0]
+                            - m[3][3] * m[0][1] * m[1][0];
+
+        cofactor[2][3] =       m[0][0] * m[1][1] * m[3][2]
+                            + m[1][0] * m[3][1] * m[0][2]
+                            + m[3][0] * m[0][1] * m[1][2]
+
+                            - m[0][2] * m[1][1] * m[3][0]
+                            - m[1][2] * m[3][1] * m[0][0]
+                            - m[3][2] * m[0][1] * m[1][0];
+
+        // compute fourth column of factors
+                            
+        cofactor[3][0] =       m[0][1] * m[1][2] * m[2][3]
+                            + m[1][1] * m[2][2] * m[0][3]
+                            + m[2][1] * m[0][2] * m[1][3]
+
+                            - m[0][3] * m[1][2] * m[2][1]
+                            - m[1][3] * m[2][2] * m[0][1]
+                            - m[2][3] * m[0][2] * m[1][1];
+
+        cofactor[3][1] =       m[0][0] * m[1][2] * m[2][3]
+                            + m[1][0] * m[2][2] * m[0][3]
+                            + m[2][0] * m[0][2] * m[1][3]
+
+                            - m[0][3] * m[1][2] * m[2][0]
+                            - m[1][3] * m[2][2] * m[0][0]
+                            - m[2][3] * m[0][2] * m[1][0];
+
+        cofactor[3][2] =       m[0][0] * m[1][1] * m[2][3]
+                            + m[1][0] * m[2][1] * m[0][3]
+                            + m[2][0] * m[0][1] * m[1][3]
+
+                            - m[0][3] * m[1][1] * m[2][0]
+                            - m[1][3] * m[2][1] * m[0][0]
+                            - m[2][3] * m[0][1] * m[1][0];
+
+        cofactor[3][3] =       m[0][0] * m[1][1] * m[2][2]
+                            + m[1][0] * m[2][1] * m[0][2]
+                            + m[2][0] * m[0][1] * m[1][2]
+
+                            - m[0][2] * m[1][1] * m[2][0]
+                            - m[1][2] * m[2][1] * m[0][0]
+                            - m[2][2] * m[0][1] * m[1][0];
+
+        // Add signs to the cofactors
+        for(short i=0; i< 4; i++)
+        {
+            for(short j=0; j<4; j++)
+            {
+                if (i!=j)
+                {
+                    cofactor[i][j] = -cofactor[i][j];
+                }
+            }
+        }
+
+        // Compute determinant (using the first column)
+        float det = m[0][0] * cofactor[0][0] 
+                    +m[0][1] * cofactor[0][1]
+                    +m[0][2] * cofactor[0][2]
+                    +m[0][3] * cofactor[0][3];
+                  
+        
+        mat4 inverse = (1.0f/det) * cofactor.getTranspose();
+
+        return inverse;
+    };
+
+    friend mat4 operator*(float f, mat4 m){
+        mat4 result;
+        for(short i=0; i< 4; i++)
+        {
+            for(short j=0; j<4; j++)
+            {
+                result[i][j] = m[i][j] * f;
+            }
+        }
+        return result;
+    }
+
+    friend std::ostream& operator<<(std::ostream& stream, mat4 m)
+    {
+        stream << "Matrix4x4" << std::endl;
+        for (short j = 0; j < 4; j++)
+            stream << "[" << m[0][j] << ", " << m[1][j] << ", " << m[2][j] << ", "<< m[3][j] << "]" << std::endl;
+        return stream;
     };
 
 private:

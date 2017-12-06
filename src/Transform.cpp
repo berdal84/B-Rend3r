@@ -10,6 +10,15 @@ Transform::Transform():
 
 }
 
+Transform::Transform(const mat4& m2):
+    position(0.f, 0.f, 0.f),
+    rotation(0.f, 0.f, 0.f),
+    scale(1.f, 1.f, 1.f),
+    matrix(m2)
+{
+}
+
+
 Transform::~Transform(){
 
 }
@@ -54,3 +63,4 @@ mat4 Transform::Scale     (vec3 _scale)
 	m[2][2] = _scale.z;
 	return m;
 }
+
