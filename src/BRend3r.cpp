@@ -64,7 +64,7 @@ bool BRend3r::update()
 	/* Evaluate deltaTime : TODO take N-2 values (ignoring higher and lower value then perform an average)*/
 	this->_t0 = this->_t1;
     this->_t1 = clock();
-    this->_deltaTime = (float)(this->_t1 - this->_t0)/CLOCKS_PER_SEC * 1000.0f;	
+    this->_deltaTime = (float)(this->_t1 - this->_t0)/CLOCKS_PER_SEC;	
 
     /* Update engine modules */
 
