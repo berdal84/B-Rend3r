@@ -160,7 +160,7 @@ bool Renderer::update(SDL_Window* window, float _dt) {
         tr->setPosition(vec3(-viewportSize.x * 2.0f, 0.f, 0.5f));
     }
     
-    tr->translate    (vec3( 100.0f * _dt, 0.f, 0.f));
+    tr->translate    (vec3( 1000.0f * _dt, 0.f, 0.f));
     tr->rotate       (vec3(0.0f, 0.0f,0.0f));
     tr->setScale     (vec3(50.0f * (2.0f + cos(tr->getPosition().x / 100.0f)) ));
     tr->updateMatrix ();

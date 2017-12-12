@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ctime>
+#include <time.h>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
@@ -14,7 +14,7 @@ private:
 	SDL_GLContext _glContext    = nullptr;
 	Renderer*   _renderer       =  nullptr;
 	float       _deltaTime      = 0.0f;
-	clock_t     _t0, _t1;               /* used to determine _deltaTime each frame */
+	Uint32     _lastTick;               /* used to determine _deltaTime each frame */
 
 public:
 	BRend3r();
