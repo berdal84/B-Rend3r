@@ -17,26 +17,28 @@
 #include <GL/glew.h>
 #include <string>
 
-class Shader {
-public:
-    static Shader* CreateVsFs(const std::string& fileName);
-    Shader();
-    Shader(const Shader& orig);
-    virtual ~Shader();
-    GLuint getProgram();
-    GLint getAttributeCoord3D();
-    std::string loadFile(const std::string& fileName);
-    bool compile(const std::string& shaderFilePath);
+namespace brd{
+    class Shader {
+    public:
+        static Shader* CreateVsFs(const std::string& fileName);
+        Shader();
+        Shader(const Shader& orig);
+        virtual ~Shader();
+        GLuint getProgram();
+        GLint getAttributeCoord3D();
+        std::string loadFile(const std::string& fileName);
+        bool compile(const std::string& shaderFilePath);
 
-private:
-    GLuint vertexShader;
-    GLuint fragmentShader;
-    GLuint program;
-    GLint attribute_coord3d;
+    private:
+        GLuint vertexShader;
+        GLuint fragmentShader;
+        GLuint program;
+        GLint attribute_coord3d;
 
-    bool bindAttributes();
-    bool compileVs(const std::string& vs_source);
-    bool compileFs(const std::string& vs_source);
-    bool linkProgram();
+        bool bindAttributes();
+        bool compileVs(const std::string& vs_source);
+        bool compileFs(const std::string& vs_source);
+        bool linkProgram();
 
-};
+    };
+}

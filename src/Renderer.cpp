@@ -19,30 +19,14 @@
 #include "Camera.h"
 
 using namespace std;
+using namespace brd;
 
 bool Renderer::initResources() {
-
-    // Create a default shape with a default shader and compile it.
-    Shape* myShape = Shape::CreateCircle(64);
-    Shader* shader = Shader::CreateVsFs("../../shaders/default");
-    myShape->setShader(shader);
-
-    Model* myModel = Model::Create(myShape);
-    const char* name = "Modele001";
-    myModel->setName("Modele001");
-    myModel->setPosition(vec3(0.0f, 0.0f, 0.0f));
-    model.push_back(myModel);
-
-    // Create a camera
-    auto cam = Camera::Create();
-    cam->setName("DefaultCamera");
-    this->currentCamera = cam;
-
     return true;
 }
 
 void Renderer::drawModel(Model* model){
-    //cout << "Drawing model :" << model << endl;
+    cout << "Renderer::drawModel(Model* model) - BEGIN" << endl;
 
     Shape* shape    = model->getShape();
     Transform* tr  = model->getTransform();
@@ -57,10 +41,12 @@ void Renderer::drawModel(Model* model){
     }else{
         drawShape(shape, tr);
     }
+    cout << "Renderer::drawModel(Model* model) - END" << endl;
 
 }
 
 void Renderer::drawShape(Shape* shape, Transform* tr){
+    cout << "Renderer::drawShape() - BEGIN" << endl;
 
     Shader* shader          = shape->getShader();
     GLuint shaderProgram    = shader->getProgram();
@@ -109,11 +95,11 @@ void Renderer::drawShape(Shape* shape, Transform* tr){
 
     glDisableVertexAttribArray(shader->getAttributeCoord3D());
 
-
+    cout << "Renderer::drawShape() - END" << endl;
 }
 
 void Renderer::render(SDL_Window* window) {
-    //cout << "Renderer::render" << endl;
+    cout << "Renderer::render(SDL_Window* window) - BEGIN" << endl;
 
     /* Clear the background as white */
     glClearColor(0.4f, 0.1f ,0.1f, 1.0f);
@@ -123,6 +109,7 @@ void Renderer::render(SDL_Window* window) {
 
     /* Display the result */
     SDL_GL_SwapWindow(window);
+    cout << "Renderer::render(SDL_Window* window) - END" << endl;
 }
 
 void Renderer::freeResources() {
@@ -131,6 +118,8 @@ void Renderer::freeResources() {
 }
 
 bool Renderer::update(SDL_Window* window, float _dt) {
+    cout << "Renderer::update - BEGIN" << endl;
+
     bool quit = false;
 
     /* Listen events */
@@ -153,37 +142,21 @@ bool Renderer::update(SDL_Window* window, float _dt) {
     }
 
     /* Update models */
-    Transform* tr = model[0]->getTransform();
-    bool isObjectOffscreen = tr->getPosition().x > viewportSize.x * 2.0f;
-    if(isObjectOffscreen)
-    {
-        tr->setPosition(vec3(-viewportSize.x * 2.0f, 0.f, 0.5f));
+    if ( model.size() > 0){
+        Transform* tr = model[0]->getTransform();
+        tr->updateMatrix ();
+    }else{
+        cout << "WARNING : no model to update" << endl;
     }
-    
-    tr->translate    (vec3( 100.0f * _dt, 0.f, 0.f));
-    tr->rotate       (vec3(0.0f, 0.0f,0.0f));
-    tr->setScale     (vec3(50.0f * (2.0f + cos(tr->getPosition().x / 100.0f)) ));
-    tr->updateMatrix ();
 
-    currentCamera->setOrthographicSize(viewportSize);
-    currentCamera->updateViewTransform();
+    if (currentCamera){
+        currentCamera->setOrthographicSize(viewportSize);
+        currentCamera->updateViewTransform();
+    }else{
+        cout << "WARNING : no camera to update" << endl;
+    }
 
-    /*
-    mat4 identity;
-    std::cout << identity;
-    std::cout << identity.inverse();
-    */
-
-    /*
-    std::cout << "Matrix :" << std::endl;
-    std::cout << tr->getMatrix();
-    std::cout << "Matrix Inverse :" << std::endl;
-    std::cout << tr->getMatrixInverse();
-    std::cout << "Matrix * MatInv :" << std::endl;
-    std::cout << tr->getMatrix()*tr->getMatrixInverse();
-    std::cout << "MatInv * Mat :" << std::endl;
-    std::cout << tr->getMatrixInverse()*tr->getMatrix();
-    */
+    cout << "Renderer::update - BEGIN" << endl;
 
     return !quit;
 }
@@ -198,6 +171,15 @@ Renderer::Renderer(const Renderer& orig) {
 Renderer::~Renderer() {
 }
 
+void Renderer::addModel(Model* _model)
+{
+    model.push_back(_model);
+}
+
+void Renderer::setCurrentCamera(Camera* _camera)
+{
+    currentCamera = _camera;
+}
 /*
 void PrintEvent(const SDL_Event * event)
 {

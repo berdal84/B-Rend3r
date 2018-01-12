@@ -1,5 +1,6 @@
 #include "Model.h"
 
+using namespace brd;
 
 Model::Model():_shape(nullptr),_transform(nullptr)
 {
@@ -20,6 +21,7 @@ void Model::translate(vec3 _offset)
 
 void Model::setPosition(vec3 _position)
 {
+	_position.z = 1.0f;
     _transform->setPosition(_position);
 }
 

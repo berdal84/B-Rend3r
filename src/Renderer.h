@@ -20,31 +20,36 @@
 #include <SDL2/SDL.h>
 #include "Trigonometry.h"
 
-/* Forward declaration */
-class Shader;
-class Shape;
-class Model;
-class Transform;
-class Camera;
+namespace brd{
 
-class Renderer {
-public:
-    Renderer(vec2 _viewportSize);
-    Renderer(const Renderer& orig);
-    virtual ~Renderer();
+    /* Forward declaration */
+    class Shader;
+    class Shape;
+    class Model;
+    class Transform;
+    class Camera;
 
-    bool initResources();
-    void freeResources();
+    class Renderer {
+    public:
+        Renderer(vec2 _viewportSize);
+        Renderer(const Renderer& orig);
+        virtual ~Renderer();
 
-    bool update     (SDL_Window*, float _dt);
-    void render     (SDL_Window*);
-    void drawModel  (Model* model);
-    void drawShape  (Shape* shape, Transform* matrix);
-private:
-    Camera* currentCamera = nullptr;
-    GLuint program;
-    GLint attribute_coord2d;
-    std::vector<Model*> model;
-    vec2 viewportSize;
-};
+        bool initResources();
+        void freeResources();
 
+        bool update     (SDL_Window*, float _dt);
+        void render     (SDL_Window*);
+        void addModel   (Model*);
+        void setCurrentCamera(Camera* _camera);
+        
+    private:
+        void drawModel  (Model* model);
+        void drawShape  (Shape* shape, Transform* matrix);
+        Camera* currentCamera = nullptr;
+        GLuint program;
+        GLint attribute_coord2d;
+        std::vector<Model*> model;
+        vec2 viewportSize;
+    };
+}
