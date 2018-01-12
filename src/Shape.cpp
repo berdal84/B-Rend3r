@@ -16,6 +16,7 @@
 #include "Trigonometry.h"
 
 using namespace std;
+using namespace brd;
 
 Shape::Shape():shader(nullptr){
 }

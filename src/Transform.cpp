@@ -1,6 +1,8 @@
 #include "Transform.h"
 #include <cmath>
 
+using namespace brd;
+
 Transform::Transform():
     position(0.f, 0.f, 0.f),
     rotation(0.f, 0.f, 0.f),

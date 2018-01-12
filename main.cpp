@@ -2,11 +2,13 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "src/BRend3r.h"
+#include "src/BRender.h"
+
+using namespace brd;
 
 int main(int argc, char* argv[]) {
 
-	BRend3r app;
+	BRender app;
 
 	app.initialize();
 

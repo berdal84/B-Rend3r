@@ -1,21 +1,27 @@
-#include "BRend3r.h"
+#include "BRender.h"
 
 #include <cstdlib>
 #include <iostream>
+#include "Camera.h"
+#include "Shader.h"
+#include "Shape.h"
+#include "Model.h"
 #include "Renderer.h"
+#include "CharacterController.h"
 
 using namespace std;
+using namespace brd;
 
-BRend3r::BRend3r(){
+BRender::BRender(){
 
 }
 
-BRend3r::~BRend3r()
+BRender::~BRender()
 {	
 
 }
 
-void BRend3r::shutdown()
+void BRender::shutdown()
 {
 	SDL_DestroyWindow         (this->_window);
 	SDL_GL_DeleteContext      (this->_glContext);
@@ -23,7 +29,7 @@ void BRend3r::shutdown()
 	delete _renderer;
 }
 
-bool BRend3r::initialize()
+bool BRender::initialize()
 {
 	/* Initialize deltaTime related variables */
 	_deltaTime = 0.0f;
@@ -45,20 +51,36 @@ bool BRend3r::initialize()
 		return false;
 	}
 
+	/* Initialize 3d Scene */
+	    // Create a default shape with a default shader and compile it.
+    Shape* myShape = Shape::CreateCircle(64);
+    Shader* shader = Shader::CreateVsFs("../../shaders/default");
+    myShape->setShader(shader);
+
+    Model* myModel = Model::Create(myShape);
+    const char* name = "Modele001";
+    myModel->setName("Modele001");
+    myModel->setPosition(vec3(0.0f, 0.0f, 0.0f));
+	myModel->setScale (vec3(100.0f));
+
+    // Create a camera
+    auto cam = Camera::Create();
+    cam->setName("DefaultCamera");
+
+	/* Initialize controller */
+	this->characterController = new CharacterController(myModel);
+
 	/* Initialize the renderer */
     this->_renderer = new Renderer(vec2(640.0f, 480.0f));	
-
-	if (!this->_renderer->initResources()){
-		cerr << "Error: unable to initialize renderer resources." << endl;
-		return false;
-    }   
+    this->_renderer->addModel(myModel);
+    this->_renderer->setCurrentCamera(cam);
 
     cout << "B-Rend3r successfully initialized !" << endl;
 
     return true;
 }
     
-bool BRend3r::update()
+bool BRender::update()
 {
 	/* Evaluate deltaTime : TODO take N-2 values (ignoring higher and lower value then perform an average)*/
 	this->_deltaTime = ((float)(SDL_GetTicks() - _lastTick))/1000.0f;
@@ -66,7 +88,7 @@ bool BRend3r::update()
     
     int fps = (int)(1/_deltaTime);
 
-    cout << "BRend3r::update() - FPS: " << fps << endl;
+    cout << "BRender::update() - FPS: " << fps << ", delta time: " << _deltaTime << endl;
 
     /* Update engine modules */
 
@@ -74,7 +96,8 @@ bool BRend3r::update()
     	// TODO
 
     /* 2 - the character controllers */
-    	// TODO
+    if ( this->characterController!= nullptr)
+    	this->characterController->update(this->_deltaTime);
 
     /* 3 - the renderer */
 	if (!_renderer->update(_window, _deltaTime))
@@ -83,7 +106,7 @@ bool BRend3r::update()
     return true;
 }
     
-void BRend3r::draw()
+void BRender::draw()
 {
 	_renderer->render(_window);
 }
