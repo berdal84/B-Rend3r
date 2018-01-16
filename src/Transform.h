@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include <math.h>
-#include "Trigonometry.h"
+#include "Math.h"
 
 namespace brd{
     class Transform

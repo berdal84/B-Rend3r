@@ -1,6 +1,8 @@
 #include "Model.h"
+#include <iostream>
 
 using namespace brd;
+using namespace std;
 
 Model::Model():_shape(nullptr),_transform(nullptr)
 {
@@ -16,6 +18,7 @@ Model* Model::Create(Shape* shape)
 
 void Model::translate(vec3 _offset)
 {
+    cout << "Model::translate(" << _offset.x << ", " << _offset.y << ", " << _offset.z << ")" << endl;
     _transform->translate(_offset);
 }
 

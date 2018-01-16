@@ -8,6 +8,7 @@
 #include "Model.h"
 #include "Renderer.h"
 #include "CharacterController.h"
+#include "PhysicsComponent.h"
 
 using namespace std;
 using namespace brd;
@@ -67,8 +68,11 @@ bool BRender::initialize()
     auto cam = Camera::Create();
     cam->setName("DefaultCamera");
 
+	/* Initialize physics component */
+	this->physicsComponent = new PhysicsComponent(myModel);
+
 	/* Initialize controller */
-	this->characterController = new CharacterController(myModel);
+	this->characterController = new CharacterController(this->physicsComponent);
 
 	/* Initialize the renderer */
     this->_renderer = new Renderer(vec2(640.0f, 480.0f));	
@@ -92,12 +96,13 @@ bool BRender::update()
 
     /* Update engine modules */
 
-    /* 1 - the physics */
-    	// TODO
-
-    /* 2 - the character controllers */
+    /* 1 - the character controllers */
     if ( this->characterController!= nullptr)
     	this->characterController->update(this->_deltaTime);
+
+    /* 2 - the physics */
+ 	if ( this->physicsComponent!= nullptr)
+    	this->physicsComponent->update(this->_deltaTime);
 
     /* 3 - the renderer */
 	if (!_renderer->update(_window, _deltaTime))

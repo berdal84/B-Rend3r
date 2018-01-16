@@ -1,6 +1,7 @@
 #pragma once
 #define PI 3.1415926535897
 #include <iostream>       // for implementation of operator <<
+#include <math.h>         // for sqrt
 
 namespace brd{
     static float radians(float _degrees)
@@ -299,15 +300,55 @@ namespace brd{
         float y;
         float z;
 
+        vec3 operator-(vec3 _right)
+        {
+            return vec3(this->x - _right.x, this->y - _right.y, this->z - _right.z );
+        };
+
+        bool operator>(vec3 _right)
+        {
+            return this->normalize() > _right.normalize();
+        };
+
+        vec3 operator*(vec3 _right)
+        {
+            return vec3(this->x * _right.x, this->y * _right.y, this->z * _right.z );
+        };
+
         vec3 operator+(vec3 _right)
         {
             return vec3(this->x + _right.x, this->y + _right.y, this->z + _right.z );
+        };
+
+        void operator+=(vec3 _right)
+        {
+            this->x += _right.x;
+            this->y += _right.y;
+            this->z += _right.z;
         };
 
         vec3 operator*(float factor)
         {
             return vec3(this->x*factor, this->y*factor, this->z*factor);
         };
+
+        vec3 operator/(float factor)
+        {
+            return vec3(this->x/factor, this->y/factor, this->z/factor);
+        };
+
+        float length()const
+        {
+            return sqrt(x*x+y*y+z*z);
+        }
+
+        vec3 normalize()
+        {
+            if (this->length() == 0.0f)
+                return *this;
+            
+            return (*this)/this->length();
+        }
 
     private:
 
@@ -330,6 +371,8 @@ namespace brd{
         {
             return vec2(this->x*factor, this->y*factor);
         };
+
+
 
     private:
 

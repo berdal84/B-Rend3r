@@ -9,7 +9,8 @@ namespace brd{
 	/* Forward declarations */
 	class Renderer;
 	class CharacterController;
-
+	class PhysicsComponent;
+	
 	class BRender
 	{
 	private:
@@ -18,7 +19,8 @@ namespace brd{
 		Renderer*   _renderer                        =  nullptr;
 		float       _deltaTime                       = 0.0f;
 		Uint32     _lastTick;                                    /* used to determine _deltaTime each frame */
-		CharacterController* characterController     = nullptr;  /* To move an object with keyboard */
+		CharacterController*  characterController    = nullptr;  /* To move an object with keyboard */
+		PhysicsComponent*     physicsComponent       = nullptr;  /* To generate realistic movements */
 	public:
 		BRender();
 		~BRender();

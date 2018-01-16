@@ -13,7 +13,7 @@
 
 #include "Shape.h"
 #include <math.h>
-#include "Trigonometry.h"
+#include "Math.h"
 
 using namespace std;
 using namespace brd;

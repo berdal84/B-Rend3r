@@ -4,15 +4,16 @@
 namespace brd{
 	/* Forward declarations */
 	class Model;
-
+	class PhysicsComponent;
+	
 	class CharacterController: public UpdatableObject
 	{
 	public:
-		CharacterController(Model* _target);
+		CharacterController(PhysicsComponent* _target);
 		~CharacterController(){};
 		void update(double)override;
 	private:
-		Model* target       = nullptr;
+		PhysicsComponent* target       = nullptr;
 
 		float  acceleration = 1000.0f;
 		float  speed        = 0.0f;
