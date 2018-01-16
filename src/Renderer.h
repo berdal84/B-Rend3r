@@ -18,7 +18,7 @@
 
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
-#include "Trigonometry.h"
+#include "Math.h"
 
 namespace brd{
 

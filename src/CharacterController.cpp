@@ -1,15 +1,16 @@
 #include "CharacterController.h"
 #include <SDL2/SDL.h>
 
-#include "Trigonometry.h" // for vec2
+#include "Math.h" // for vec2
 #include "Model.h"
 #include <cstdlib>
 #include <iostream>
 
 using namespace brd;
 using namespace std;
+#include "PhysicsComponent.h"
 
-CharacterController::CharacterController(Model* _target)
+CharacterController::CharacterController(PhysicsComponent* _target)
 {
 	this->target = _target;
 }
@@ -38,15 +39,8 @@ void CharacterController::update(double _deltaTime)
 		direction.x = right - left;
 		direction.y = up - down;
 		direction.z = 0.0f;
-		cout << "CharacterController::update() - Move target" << endl;
-
-		speed += acceleration * _deltaTime;
-		if( speed > speedMax)
-			speed = speedMax;
-
-		vec3 move = direction * _deltaTime * speed;
-
-		this->target->translate(move);
+		
+		this->target->addImpulse(direction.normalize() * 1000.0f);
 		cout << "CharacterController::update() - Done" << endl;
 	}else{
 		cout << "CharacterController::update() - No target" << endl;
