@@ -3,13 +3,14 @@
 #include <time.h>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include <vector>
 
 namespace brd{
 
 	/* Forward declarations */
+	class Model;
 	class Renderer;
-	class CharacterController;
-	class PhysicsComponent;
+	class KeyboardController;
 	
 	class BRender
 	{
@@ -19,8 +20,9 @@ namespace brd{
 		Renderer*   _renderer                        =  nullptr;
 		float       _deltaTime                       = 0.0f;
 		Uint32     _lastTick;                                    /* used to determine _deltaTime each frame */
-		CharacterController*  characterController    = nullptr;  /* To move an object with keyboard */
-		PhysicsComponent*     physicsComponent       = nullptr;  /* To generate realistic movements */
+
+		std::vector<Model*>    models;
+
 	public:
 		BRender();
 		~BRender();

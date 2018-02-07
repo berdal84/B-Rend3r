@@ -26,20 +26,14 @@ bool Renderer::initResources() {
 }
 
 void Renderer::drawModel(Model* model){
-    cout << "Renderer::drawModel(Model* model) - BEGIN" << endl;
+    cout << "Renderer::drawModel(Model* model) - \""<< model->getName() << "\" - BEGIN" << endl;
 
-    Shape* shape    = model->getShape();
-    Transform* tr  = model->getTransform();
-
-    bool hasShape   = shape!=nullptr;
-    bool hasTransform  = tr!=nullptr;
-
-    if ( !hasShape ){
+    if ( !model->hasComponent<Shape>() ){
         cerr << "The model " << model << " has no Shape attached." << endl;
-    }else if (!hasTransform){
+    }else if (!model->hasComponent<Transform>()){
         cerr << "The model " << model << " has no Transform attached." << endl;
     }else{
-        drawShape(shape, tr);
+        drawShape(model->getComponent<Shape>(), model->getComponent<Transform>());
     }
     cout << "Renderer::drawModel(Model* model) - END" << endl;
 
@@ -105,7 +99,8 @@ void Renderer::render(SDL_Window* window) {
     glClearColor(0.4f, 0.1f ,0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    drawModel(model[0]);
+    for(auto m : model)
+        drawModel(m);
 
     /* Display the result */
     SDL_GL_SwapWindow(window);
@@ -141,14 +136,6 @@ bool Renderer::update(SDL_Window* window, float _dt) {
 	   }
     }
 
-    /* Update models */
-    if ( model.size() > 0){
-        Transform* tr = model[0]->getTransform();
-        tr->updateMatrix ();
-    }else{
-        cout << "WARNING : no model to update" << endl;
-    }
-
     if (currentCamera){
         currentCamera->setOrthographicSize(viewportSize);
         currentCamera->updateViewTransform();
@@ -156,7 +143,7 @@ bool Renderer::update(SDL_Window* window, float _dt) {
         cout << "WARNING : no camera to update" << endl;
     }
 
-    cout << "Renderer::update - BEGIN" << endl;
+    cout << "Renderer::update - END" << endl;
 
     return !quit;
 }

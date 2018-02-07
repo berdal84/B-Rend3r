@@ -1,7 +1,12 @@
 #include "Transform.h"
 #include <cmath>
+#include "Component.h"
+#include <iostream>
 
 using namespace brd;
+using namespace std;
+
+ComponentType_ Transform::s_type = ComponentType_Transform;
 
 Transform::Transform():
     position(0.f, 0.f, 0.f),
@@ -35,7 +40,16 @@ void Transform::rotate(vec3 _offset){
 
 void Transform::updateMatrix()
 {
+	cout << "transform::updateMatrix() - Begin" << endl;
 	this->matrix = Translate(position) * Rotate(rotation) * Scale(scale);
+	cout << "transform::updateMatrix() - End" << endl;
+}
+
+void Transform::update(double _deltaTime)
+{
+	cout << "Transform::update() - Begin" << endl;
+	updateMatrix();
+	cout << "Transform::update() - End" << endl;
 }
 
 mat4 Transform::Translate (vec3 _position)

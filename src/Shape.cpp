@@ -18,6 +18,8 @@
 using namespace std;
 using namespace brd;
 
+ComponentType_ Shape::s_type = ComponentType_Shape;
+
 Shape::Shape():shader(nullptr){
 }
 

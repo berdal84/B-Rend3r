@@ -1,19 +1,20 @@
 #pragma once
 #include "UpdatableObject.h"
+#include "Component.h"
 
 namespace brd{
 	/* Forward declarations */
 	class Model;
-	class PhysicsComponent;
 	
-	class CharacterController: public UpdatableObject
+	class KeyboardController: public UpdatableObject, public Component<KeyboardController>
 	{
 	public:
-		CharacterController(PhysicsComponent* _target);
-		~CharacterController(){};
+		KeyboardController(Model* _target);
+		~KeyboardController(){};
 		void update(double)override;
+		static ComponentType_ s_type;
 	private:
-		PhysicsComponent* target       = nullptr;
+		Model* target       = nullptr;
 
 		float  acceleration = 1000.0f;
 		float  speed        = 0.0f;

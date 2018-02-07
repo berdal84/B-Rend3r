@@ -4,37 +4,25 @@
 using namespace brd;
 using namespace std;
 
-Model::Model():_shape(nullptr),_transform(nullptr)
+Model::Model()
 {
-    _transform = new Transform();
-}
+    components.resize(ComponentType_COUNT);
+    for(size_t i=0; i<components.size(); i++)
+        components[i] = nullptr;
 
-Model* Model::Create(Shape* shape)
-{
-	Model* model = new Model();
-	model->_shape     = shape;
-	return model;
-}
-
-void Model::translate(vec3 _offset)
-{
-    cout << "Model::translate(" << _offset.x << ", " << _offset.y << ", " << _offset.z << ")" << endl;
-    _transform->translate(_offset);
-}
-
-void Model::setPosition(vec3 _position)
-{
-	_position.z = 1.0f;
-    _transform->setPosition(_position);
-}
-
-void Model::setScale(vec3 _scale)
-{
-    _transform->setScale(_scale);
+    addComponent(new Transform());
 }
 
 Model::~Model()
 {
-    delete _transform;
-    delete _shape;
+    for(auto component : components)
+        delete component;
 }
+
+Model* Model::Create(const char* _name)
+{
+	Model* model = new Model();
+    model->name      = _name;
+	return model;
+}
+
