@@ -3,9 +3,18 @@
 #include <stdlib.h>
 #include <math.h>
 #include "Math.h"
+#include "Component.h"
+#include "UpdatableObject.h"
 
 namespace brd{
-    class Transform
+
+    /*
+        class Transform :
+
+        This class is a component able to locate and transform an object into euclidian space coordinates
+    */
+
+    class Transform : public Component<Transform>, public UpdatableObject
     {
         public:
             Transform();
@@ -40,6 +49,9 @@ namespace brd{
             /* Return the inverted matrix   (inv(A) * A = A * inv(A) = Identity )*/
             mat4 getMatrixInverse(){ return matrix.getInverse(); }
 
+            /* Inherited from Updatable */
+            virtual void update(double _deltaTime)override;
+
             /* instantiate a new 4x4 matrix that perform a translation */
             static mat4 Translate (vec3 _position);
 
@@ -48,6 +60,8 @@ namespace brd{
 
             /* instantiate a new 4x4 matrix that perform a scale */
             static mat4 Scale     (vec3 _scale);
+            
+            static ComponentType_ s_type;
 
         private:  
 

@@ -7,8 +7,8 @@
 #include "Shape.h"
 #include "Model.h"
 #include "Renderer.h"
-#include "CharacterController.h"
-#include "PhysicsComponent.h"
+#include "KeyboardController.h"
+#include "Physics.h"
 
 using namespace std;
 using namespace brd;
@@ -32,11 +32,17 @@ void BRender::shutdown()
 
 bool BRender::initialize()
 {
-	/* Initialize deltaTime related variables */
+	/*
+		Initialize deltaTime related variables
+	*/
+
 	_deltaTime = 0.0f;
     _lastTick = SDL_GetTicks();
 
-	/* SDL-related initialising functions */
+	/*
+		SDL-related initialising functions
+	*/
+
 	SDL_Init(SDL_INIT_VIDEO);
 	this->_window = SDL_CreateWindow("B-Rend3r - v0.1", // Window title could be a parameter or a define
 		SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
@@ -45,36 +51,58 @@ bool BRender::initialize()
 	
 	this->_glContext = SDL_GL_CreateContext(this->_window);
 
-	/* Extension wrangler initialising */
+	/* 
+		Extension wrangler initialising 
+	*/
+
 	GLenum glew_status = glewInit();
 	if (glew_status != GLEW_OK) {
 		cerr << "Error: glewInit: " << glewGetErrorString(glew_status) << endl;
 		return false;
 	}
 
-	/* Initialize 3d Scene */
-	    // Create a default shape with a default shader and compile it.
-    Shape* myShape = Shape::CreateCircle(64);
-    Shader* shader = Shader::CreateVsFs("../../shaders/default");
-    myShape->setShader(shader);
+	/* 
+		Create a simple model 
+	*/
 
-    Model* myModel = Model::Create(myShape);
-    const char* name = "Modele001";
-    myModel->setName("Modele001");
-    myModel->setPosition(vec3(0.0f, 0.0f, 0.0f));
-	myModel->setScale (vec3(100.0f));
+	Model* myModel = Model::Create("Modele001");
 
-    // Create a camera
+		// Shape Component
+	    Shape* myShape = Shape::CreateCircle(64);
+	    Shader* shader = Shader::CreateVsFs("./shaders/default");
+	    myShape->setShader(shader);    
+	    myModel->addComponent(myShape);
+
+	    // Transform Component
+	    Transform* transform = myModel->getComponent<Transform>();
+	    transform->setPosition(vec3(0.0f, 0.0f, 0.0f));
+		transform->setScale (vec3(100.0f));
+
+		// Physics Component
+		myModel->addComponent(new Physics(myModel));
+
+		// KeyboardController Component
+		myModel->addComponent(new KeyboardController(myModel));
+
+	this->models.push_back(myModel);
+
+    /* 
+    	Create a camera 
+    */
+
     auto cam = Camera::Create();
     cam->setName("DefaultCamera");
 
-	/* Initialize physics component */
-	this->physicsComponent = new PhysicsComponent(myModel);
+	/* 
+		Initialize controller 
+	*/
 
-	/* Initialize controller */
-	this->characterController = new CharacterController(this->physicsComponent);
+	
 
-	/* Initialize the renderer */
+	/* 
+		Initialize the renderer
+	*/
+
     this->_renderer = new Renderer(vec2(640.0f, 480.0f));	
     this->_renderer->addModel(myModel);
     this->_renderer->setCurrentCamera(cam);
@@ -96,15 +124,31 @@ bool BRender::update()
 
     /* Update engine modules */
 
-    /* 1 - the character controllers */
-    if ( this->characterController!= nullptr)
-    	this->characterController->update(this->_deltaTime);
+    /* 1 - the keyboard controllers */
+    for(auto model : this->models){
+ 		if ( model->hasComponent<KeyboardController>())
+    		model->getComponent<KeyboardController>()->update(this->_deltaTime);
+    	else
+    		cout << "Unable to found KeyboardController Component on \"" << model->getName() << "\"" << endl;
+	}
 
     /* 2 - the physics */
- 	if ( this->physicsComponent!= nullptr)
-    	this->physicsComponent->update(this->_deltaTime);
+    for(auto model : this->models){
+ 		if ( model->hasComponent<Physics>())
+    		model->getComponent<Physics>()->update(this->_deltaTime);
+    	else
+    		cout << "Unable to found Physics Component on \"" << model->getName() << "\"" << endl;
+	}
 
-    /* 3 - the renderer */
+	/* 3 - the transforms */
+    for(auto model : this->models){
+ 		if ( model->hasComponent<Transform>())
+    		model->getComponent<Transform>()->update(this->_deltaTime);
+    	else
+    		cout << "Unable to found Transform Component on \"" << model->getName() << "\"" << endl;
+	}
+
+    /* 4 - the renderer */
 	if (!_renderer->update(_window, _deltaTime))
     	return false;
 

@@ -16,12 +16,14 @@
 #include <cstdlib>
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
+#include "Component.h"
 
 namespace brd{
     /* Forward declaration */
     class Shader;
 
-    class Shape {
+    class Shape : public Component<Shape>
+    {
     public:
         Shape();
         GLfloat* getVertices();
@@ -40,6 +42,9 @@ namespace brd{
 
         static Shape* CreatePlane();
         static Shape* CreateCircle(size_t segments = 16);
+
+        static ComponentType_ s_type;
+
     private:
         int numberOfElementsPerVertex   = 2;
         int numberOfElements            = 0;
