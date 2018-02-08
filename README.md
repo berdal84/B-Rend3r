@@ -5,4 +5,4 @@ I wrote this program to learn OpenGL and to build a simple framework for my own 
 
 Here a first version of the UML class diagram :
 
-![alt text](https://github.com/berdal84/B-Rend3r/blob/master/UML/ClassDiagram_DrawIO.svg)
+![alt text](https://github.com/berdal84/B-Rend3r/blob/master/UML/ClassDiagram_DrawIO.jpg)
